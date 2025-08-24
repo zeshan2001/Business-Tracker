@@ -1,0 +1,95 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+  }
+
+  .basic-nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(90, 110, 116);
+  }
+
+  .basic-container {
+    display: flex;
+  }
+
+  .ul-container {
+    padding: 0;
+    display: flex;
+    list-style-type: none;
+  }
+
+  .list-container a {
+    padding: 0 5px;
+    text-decoration: none;
+    color: black;
+    transition: color 0.3s ease;
+  }
+
+  .list-container a:hover {
+    color: lightblue;
+  }
+.description-container {
+  display: grid;
+  gap: 2rem;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.description-container section {
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+}
+
+.description-container section:hover {
+  transform: translateY(-3px);
+}
+
+.entrepreneurs {
+  background: #f0f9ff;
+  border-left: 5px solid #0284c7;
+}
+.entrepreneurs h1 { color: #0284c7; }
+.entrepreneurs hr {
+  border: none;
+  border-top: 2px solid #0284c7;
+  margin: 0.5rem 0 1rem;
+}
+
+.investors {
+  background: #fefce8;
+  border-left: 5px solid #ca8a04;
+}
+.investors h1 { color: #ca8a04; }
+.investors hr {
+  border: none;
+  border-top: 2px solid #ca8a04;
+  margin: 0.5rem 0 1rem;
+}
+
+.line-managers {
+  background: #f0fdf4;
+  border-left: 5px solid #16a34a;
+}
+.line-managers h1 { color: #16a34a; }
+.line-managers hr {
+  border: none;
+  border-top: 2px solid #16a34a;
+  margin: 0.5rem 0 1rem;
+}
+
+.description-container p {
+  line-height: 1.6;
+  color: #333;
+}
+
+@media (min-width: 768px) {
+  .description-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
