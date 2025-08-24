@@ -31,6 +31,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "main_app",
+    "Business_owner",
+    "Bank_Panel",
+    "investor_panel",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

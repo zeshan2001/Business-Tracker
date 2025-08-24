@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/icon.png' %}">
+  <title>Track your business</title>
+</head>
+<body>
+  <header class="navbar">
+    <nav class="basic-nav">
+      <div class="basic-container">
+        <ul class="ul-container">
+          <li class="list-container"><a href="{% url 'home' %}">Home</a></li>
+          <li class="list-container"><a href="{% url 'contact' %}">Contact us</a></li>
+        </ul>
+      </div>
+      <div class="auth-container">
+        <ul class="ul-container">
+          <li class="list-container"><a href="{% url 'sign-up' %}">sign-up</a></li>
+          <li class="list-container"><a href="{% url 'sign-in' %}">sign-in</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer>
+
+  </footer>
+</body>
+</html>
