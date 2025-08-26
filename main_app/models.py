@@ -27,7 +27,10 @@ class Income_statement(models.Model):
 class Bank(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
-    phone = models.IntegerField(max_length=12)
+    phone = models.CharField(max_length=12)
+
+    def __str__(self):
+        return self.name
 
 class Loan(models.Model):
     business_id = models.ForeignKey(Business, on_delete=models.CASCADE)
