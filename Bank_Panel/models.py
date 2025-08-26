@@ -1,5 +1,6 @@
 from django.db import models
 from ..Business_owner.models import Business
+from datetime import date
 # Create your models for Bank Panel here.
 
 class Bank(models.Model):
@@ -12,4 +13,5 @@ class Loan(models.Model):
     bank_id = models.ForeignKey(Bank)
     loan_amount = models.DecimalField(max_digits=12 ,decimal_places=2)
     interest_rate = models.DecimalField(max_digits=1, decimal_places=2)
-    # start_date= models.DateT
+    start_date= models.DateField
+    end_date = models.DateField
