@@ -11,4 +11,10 @@ class Business(models.Model):
 
 class Balance_sheet(models.Model):
     business_id=models.ForeignKey(Business.business_id,on_delete=models.CASCADE)
-    current_assets=models.FloatField()
+    current_assets=models.DecimalField(max_digits=12,decimal_places=2)
+    non_current_assets=models.DecimalField(max_digits=12,decimal_places=2)
+    cash_equivalents=models.DecimalField(max_digits=12,decimal_places=2)
+    current_liabilities=models.DecimalField(max_digits=12,decimal_places=2)
+    non_current_liabilities=models.DecimalField(max_digits=12,decimal_places=2)
+    shareholders_equity=models.DecimalField(max_digits=12,decimal_places=2)
+    
