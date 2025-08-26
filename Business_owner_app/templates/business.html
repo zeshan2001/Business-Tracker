@@ -1,5 +1,7 @@
 {% extends "baseBusinessOwner.html" %} {% block content %}
-
+<li>
+  <a href="{% url 'business_Create' %}">Business Create</a>
+</li>
 <div class="container">
   <p>Total businesses: {{ businesses|length }}</p>
 
