@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class BankPanelConfig(AppConfig):
+class InvestorPanelConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'Bank_Panel'
+    name = 'investor_app'

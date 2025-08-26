@@ -34,9 +34,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "main_app",
-    "Business_owner",
-    "Bank_Panel",
-    "investor_panel",
+    "Business_owner_app",
+    "Bank_app",
+    "investor_app",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -81,9 +81,9 @@ WSGI_APPLICATION = 'Business_Tracker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv(""),
-        'USER': os.getenv(""),
-        'PASSWORD': os.getenv("")
+        'NAME': os.getenv("DATABASENAME"),
+        'USER': os.getenv("DATABASEUSER"),
+        'PASSWORD': os.getenv("DATABASEPASSWORD")
     }
 }
 
