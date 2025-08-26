@@ -3,9 +3,19 @@ from django.contrib.auth.models import User
 from datetime import date
 
 # Create your models for Business here.
+
+REQUEST_CHOICE = (
+    ("P", "Panding"),
+    ("A", "Accepted"),
+    ("R", "Rejected")
+)
+
 class Business(models.Model):
     user_id=models.ForeignKey(User,on_delete=models.CASCADE)
     brand=models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.brand
 
 class Balance_sheet(models.Model):
     business_id=models.ForeignKey(Business,on_delete=models.CASCADE)
@@ -40,9 +50,15 @@ class Loan(models.Model):
     start_date= models.DateField
     end_date = models.DateField
 
+    def __str__(self):
+        return f"Loan to {self.business_id.user_id.username} brand {self.business_id.brand}"
+
 class Request(models.Model):
     business_id=models.ForeignKey(Business,on_delete=models.CASCADE)
     bank_id=models.ForeignKey(Bank,on_delete=models.CASCADE)
     borrow_amount=models.DecimalField(max_digits=12,decimal_places=2)
     description=models.CharField(max_length=255)
-    status=models.CharField(max_length=50)
+    status=models.CharField(max_length=1, choices=REQUEST_CHOICE, default=REQUEST_CHOICE[0][0])
+
+    def __str__(self):
+        return f"request from {self.business_id.user_id.username} brand {self.business_id.brand}"
