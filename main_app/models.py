@@ -10,6 +10,12 @@ REQUEST_CHOICE = (
     ("R", "Rejected")
 )
 
+ROLE_CHOICE = (
+    ("B", "Business Owner"),
+    ("I", "Investor"),
+    ("L", "Line Manager")
+)
+
 class Business(models.Model):
     user_id=models.ForeignKey(User,on_delete=models.CASCADE)
     brand=models.CharField(max_length=255)
@@ -62,3 +68,12 @@ class Request(models.Model):
 
     def __str__(self):
         return f"request from {self.business_id.user_id.username} brand {self.business_id.brand}"
+
+class Profile(models.Model):
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
+    bank_id = models.OneToOneField(Bank, on_delete=models.CASCADE)
+
+    role = models.CharField(max_length=1, choices=ROLE_CHOICE, default=ROLE_CHOICE[0][0])
+
+    def __str__(self):
+        return self.user_id.username
