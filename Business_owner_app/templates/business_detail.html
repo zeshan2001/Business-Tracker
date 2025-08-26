@@ -1,10 +1,38 @@
 {% extends "baseBusinessOwner.html" %} {% block content %}
 
 <div class="container">
-  <div class="card">
-    <h3>{{ business }}</h3>
-    <p>{{ business }}</p>
+  <h3>Balance Sheets</h3>
+  {% if balance_sheets %} {% for sheet in balance_sheets %}
+  <div class="card" style="margin-bottom: 20px">
+    <h4>Year: {{ sheet.year }}</h4>
+    <p><strong>Current Assets:</strong> {{ sheet.current_assets }}</p>
+    <p><strong>Non-Current Assets:</strong> {{ sheet.non_current_assets }}</p>
+    <p><strong>Cash & Equivalents:</strong> {{ sheet.cash_equivalents }}</p>
+    <p><strong>Current Liabilities:</strong> {{ sheet.current_liabilities }}</p>
+    <p>
+      <strong>Non-Current Liabilities: </strong>{{ sheet.current_liabilities }}
+    </p>
+    <p><strong>Shareholders Equity:</strong> {{ sheet.shareholders_equity }}</p>
   </div>
+  {% endfor %} {% else %}
+  <p>No balance sheets available.</p>
+  {% endif %}
+
+  <!-- Income Statements -->
+  <h3>Income Statements</h3>
+  {% if income_statements %} {% for statement in income_statements %}
+  <div class="card" style="margin-bottom: 20px">
+    <h4>Year: {{ statement.year }}</h4>
+    <p><strong>Revenue:</strong> {{ statement.revenue }}</p>
+    <p><strong>Cost of Goods Sold:</strong> {{ statement.cogs }}</p>
+    <p>
+      <strong>Operating Expenses:</strong> {{ statement.operating_expenses }}
+    </p>
+    <p><strong>Net Income:</strong> {{ statement.net_income }}</p>
+  </div>
+  {% endfor %} {% else %}
+  <p>No income statements available.</p>
+  {% endif %}
 </div>
 
 {% endblock %}

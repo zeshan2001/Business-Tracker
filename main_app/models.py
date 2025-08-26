@@ -23,10 +23,10 @@ class Business(models.Model):
 
 
     def __str__(self):
-        return self.brand
+        return f"{self.brand} (Owner: {self.user.username})"
 
 class Balance_sheet(models.Model):
-    business=models.ForeignKey(Business,on_delete=models.CASCADE)
+    business=models.ForeignKey(Business,on_delete=models.CASCADE,related_name='balance_sheets')
     current_assets=models.DecimalField(max_digits=12,decimal_places=2)
     non_current_assets=models.DecimalField(max_digits=12,decimal_places=2)
     cash_equivalents=models.DecimalField(max_digits=12,decimal_places=2)
@@ -36,7 +36,7 @@ class Balance_sheet(models.Model):
     year=models.CharField(max_length=4)
 
 class Income_statement(models.Model):
-    business=models.ForeignKey(Business,on_delete=models.CASCADE)
+    business=models.ForeignKey(Business,on_delete=models.CASCADE,related_name='income_statements')
     revenue=models.DecimalField(max_digits=12,decimal_places=2)
     cogs=models.DecimalField(max_digits=12,decimal_places=2)
     operating_expenses=models.DecimalField(max_digits=12,decimal_places=2)
