@@ -8,7 +8,7 @@ class RoleRequiredMixin(LoginRequiredMixin):
         profile = getattr(request.user, "profile", None)
         if profile and profile.role in self.allowed_roles:
             return super().dispatch(request, *args, **kwargs)
-        return redirect("home")
+        return redirect("")
 
 '''
 class Example(RoleRequiredMixin):
