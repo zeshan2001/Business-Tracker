@@ -19,10 +19,10 @@ EMAIL_PASSWORD = '8usinessTracker'
 # msg.attach(MIMEText(body, "plain"))
 
 # Send email via Gmail SMTP
-with smtplib.SMTP("smtp.gmail.com", 587) as server:
-    server.starttls()
-    server.login("the.business.trackers@gmail.com", "8usinessTracker")
-    server.sendmail(msg["From"], msg["To"], msg.as_string())
+# with smtplib.SMTP("smtp.gmail.com", 587) as server:
+#     server.starttls()
+#     server.login("the.business.trackers@gmail.com", "8usinessTracker")
+#     server.sendmail(msg["From"], msg["To"], msg.as_string())
 
 # email_sender = 'the.business.trackers@gmail.com'
 # email_receiver = 'mahmoodish873@gmail.com'

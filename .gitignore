@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 .env
 __pycache__/
+=======
+__pycache__/
+.env
+>>>>>>> 98f8d4da8629ba6e48dfa7f884a94f92f906b0d3
 migrations/
