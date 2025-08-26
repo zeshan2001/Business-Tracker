@@ -75,9 +75,9 @@ class Request(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bank = models.OneToOneField(Bank, on_delete=models.CASCADE)
+    bank = models.OneToOneField(Bank, on_delete=models.CASCADE, null=True, blank=True)
 
     role = models.CharField(max_length=1, choices=ROLE_CHOICE, default=ROLE_CHOICE[0][0])
 
     def __str__(self):
-        return self.user_id.username
+        return self.user.username
