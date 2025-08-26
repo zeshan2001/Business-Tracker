@@ -12,4 +12,4 @@ class Loan(models.Model):
     bank_id = models.ForeignKey(Bank)
     loan_amount = models.DecimalField(max_digits=12 ,decimal_places=2)
     interest_rate = models.DecimalField(max_digits=1, decimal_places=2)
-    start_date= models.DateT
+    # start_date= models.DateT
