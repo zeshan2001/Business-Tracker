@@ -6,6 +6,11 @@
   </head>
   <body>
     <h1>base works</h1>
+    <form action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <button type="submit">Logout</button>
+    </form>
+
     {% block content %} {% endblock %}
   </body>
 </html>
