@@ -1,20 +1,76 @@
 {% extends "baseBusinessOwner.html" %} {% block content %}
-<li>
-  <a href="{% url 'business_Create' %}">Business Create</a>
-</li>
-<div class="container">
-  <p>Total businesses: {{ businesses|length }}</p>
 
-  {% for business_card in businesses %}
-  <a href="{{ business_card.id }}">
-    <div class="card">
-      <h3>Brand name: {{ business_card.brand }}</h3>
-      <p>Initial Cost : {{ business_card.init_cost }}</p>
+<div class="max-w-6xl mx-auto px-4 py-8">
+  <div class="mb-8 flex justify-between items-center">
+    <!-- Create Business Button -->
+    <a
+      href="{% url 'business_Create' %}"
+      class="inline-flex items-center px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 shadow-md hover:shadow-lg"
+    >
+      Create Business
+    </a>
+
+    <!-- Business Count -->
+    <div class="bg-gray-100 px-4 py-2 rounded-lg">
+      <p class="text-lg">
+        Total businesses:
+        <span class="font-bold text-blue-600">{{ businesses|length }}</span>
+      </p>
     </div>
-  </a>
-  {% empty %}
-  <p>No businesses available.</p>
-  {% endfor %}
+  </div>
+
+  <!-- Business Cards Grid -->
+  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {% for business_card in businesses %}
+    <a
+      href="{{ business_card.id }}"
+      class="transform hover:-translate-y-1 transition duration-200"
+    >
+      <div
+        class="p-6 bg-white rounded-xl shadow-md hover:shadow-lg border border-gray-100"
+      >
+        <div class="flex justify-between items-start mb-4">
+          <h3 class="text-xl font-bold text-gray-800">
+            {{ business_card.brand }}
+          </h3>
+          <span
+            class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full"
+          >
+            Active
+          </span>
+        </div>
+        <div class="flex items-center text-gray-600">
+
+          <p class="font-medium">
+            Initial Cost: ${{ business_card.init_cost }}
+          </p>
+        </div>
+      </div>
+    </a>
+    {% empty %}
+    <div
+      class="col-span-full p-8 text-center bg-gray-50 rounded-xl border-2 border-dashed border-gray-300"
+    >
+      <svg
+        class="mx-auto h-12 w-12 text-gray-400 mb-3"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+        />
+      </svg>
+      <p class="text-gray-500 text-lg font-medium">No businesses available.</p>
+      <p class="text-gray-400 mt-1">
+        Get started by creating your first business
+      </p>
+    </div>
+    {% endfor %}
+  </div>
 </div>
 
 {% endblock %}
