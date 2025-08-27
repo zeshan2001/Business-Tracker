@@ -1,4 +1,6 @@
 import smtplib
+
+from email.message import EmailMessage
 # from email.mime.text import MIMEText
 # from email.mime.multipart import MIMEMultipart
 
@@ -10,11 +12,11 @@ EMAIL_ADDRESS = "the.business.trackers@gmail.com"
 EMAIL_PASSWORD = '8usinessTracker'
 
 
-email_sender = 'the.business.trackers@gmail.com'
-email_receiver = 'mahmoodish873@gmail.com'
+business_email = 'the.business.trackers@gmail.com'
+client_email = 'mahmoodish873@gmail.com'
 
 
-with smtplib.SMTP('smto.gmail.com', 587) as smtp:
+with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
     smtp.ehlo()
     smtp.starttls()
     smtp.ehlo()
@@ -23,7 +25,10 @@ with smtplib.SMTP('smto.gmail.com', 587) as smtp:
 
     subject = ('death')
     body = ('Body text ')
+    subjectauto = ("We Received Your Request")
+    bodyauto = ("Thank you for reaching out to us. We have received your message and our team will contact you as soon as possible.")
 
     msg = f'Subject: {subject}\n\n{body}'
-
-    smtp.sendmail(EMAIL_ADDRESS, email_receiver,msg )
+    msgauto = f'Subject: {subjectauto}\n\n{bodyauto}'
+    smtp.sendmail(client_email, business_email,msg )
+    smtp.sendmail(business_email, client_email,msgauto )
