@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404
-from main_app.models import Business 
+from main_app.models import Business ,Income_statement
 from django.views.generic.edit import UpdateView,CreateView,DeleteView
 # Create your views here.
 
@@ -18,6 +18,27 @@ class business_Updata(UpdateView):
 class business_Delete(DeleteView):
     model=Business
     success_url='/business/'
+
+class income_statement(CreateView):
+    model = Income_statement
+    fields = ['revenue', 'cogs', 'operating_expenses', 'net_income', 'year']
+    success_url = '/business/'
+    def get_initial(self):
+        initial = super().get_initial()
+        # Pre-fill the business field from URL parameter
+        business_id = self.kwargs.get('business_id')
+        if business_id:
+            initial['business'] = Business.objects.get(id=business_id)
+        return initial
+    
+    def form_valid(self, form):
+        # Set the business from URL if provided
+        business_id = self.kwargs.get('business_id')
+        if business_id:
+            form.instance.business = Business.objects.get(id=business_id)
+        return super().form_valid(form)
+    
+    
 def business(request):
     businesses=Business.objects.all()
     return render(request, 'business.html',{'businesses':businesses})
