@@ -44,11 +44,14 @@
       >
         <!-- Card Header -->
         <div class="p-6">
+          <div class="image">
+            {% load static %}
+            <img src="{% static business_card.image|cut:'main_app/static' %}" alt="brand image" />
+          </div>
           <div class="flex justify-between items-start mb-4">
             <h3 class="text-xl font-bold text-gray-900">
               {{ business_card.brand }}
             </h3>
-
           </div>
 
           <!-- Card Content -->
