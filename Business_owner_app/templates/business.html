@@ -1,0 +1,20 @@
+{% extends "baseBusinessOwner.html" %} {% block content %}
+<li>
+  <a href="{% url 'business_Create' %}">Business Create</a>
+</li>
+<div class="container">
+  <p>Total businesses: {{ businesses|length }}</p>
+
+  {% for business_card in businesses %}
+  <a href="{{ business_card.id }}">
+    <div class="card">
+      <h3>Brand name: {{ business_card.brand }}</h3>
+      <p>Initial Cost : {{ business_card.init_cost }}</p>
+    </div>
+  </a>
+  {% empty %}
+  <p>No businesses available.</p>
+  {% endfor %}
+</div>
+
+{% endblock %}
