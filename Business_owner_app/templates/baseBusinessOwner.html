@@ -12,25 +12,54 @@
       href="{% static 'images/icon.png' %}"
     />
     <title>Track your business</title>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <header class="navbar">
-      <nav class="basic-nav">
-        <div class="basic-container">
-          <ul class="ul-container">
-            <li class="list-container"><a href="{% url 'home' %}">Home</a></li>
-            <li class="list-container">
-              <a href="{% url 'contact' %}">Contact us</a>
-            </li>
-            <li><a href="{% url 'business' %}"> Business </a></li>
-            <li><a href="{% url 'Profile' %}"> Profile </a></li>
-            <li>
-            <form action="{% url 'logout' %}" method="post">
-              {% csrf_token %}
-              <button type="submit">Logout</button>
-            </form>
-          </li>
-          </ul>
+    <header class="bg-gradient-to-r from-blue-600 to-blue-800 shadow-lg">
+      <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex">
+            <div class="flex space-x-8 items-center">
+              <!-- Logo or Brand Name could go here -->
+              <span class="text-white font-bold text-xl">Business Tracker</span>
+              
+              <ul class="flex space-x-8">
+                <li>
+                  <a href="{% url 'home' %}" 
+                     class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200">
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a href="{% url 'contact' %}" 
+                     class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200">
+                    Contact us
+                  </a>
+                </li>
+                <li>
+                  <a href="{% url 'business' %}" 
+                     class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200">
+                    Business
+                  </a>
+                </li>
+                <li>
+                  <a href="{% url 'Profile' %}" 
+                     class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200">
+                    Profile
+                  </a>
+                </li>
+                <li>
+                  <form action="{% url 'logout' %}" method="post" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" 
+                            class="text-white hover:text-red-300 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-red-300">
+                      Logout
+                    </button>
+                  </form>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </nav>
     </header>
