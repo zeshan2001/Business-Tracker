@@ -16,8 +16,8 @@ class business_Updata(UpdateView):
     model=Business
     fields="__all__"
 class business_Delete(DeleteView):
-    pass
-
+    model=Business
+    success_url='/business/'
 def business(request):
     businesses=Business.objects.all()
     return render(request, 'business.html',{'businesses':businesses})
