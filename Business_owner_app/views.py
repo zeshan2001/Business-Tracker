@@ -9,7 +9,7 @@ from django.views.generic.edit import UpdateView,CreateView,DeleteView
 
 class business_Create(CreateView):
     model=Business
-    fields=['brand','init_cost']
+    fields=['brand','init_cost', 'image', 'description']
     success_url='/business/'
     def form_valid(self, form):
         form.instance.user=self.request.user
@@ -18,7 +18,7 @@ class business_Create(CreateView):
 
 class business_Updata(UpdateView):
     model=Business
-    fields=['brand','init_cost']
+    fields=['brand','init_cost', 'image', 'description']
     success_url='/business/'
     def form_valid(self, form):
         form.instance.user=self.request.user

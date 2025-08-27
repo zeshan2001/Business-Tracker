@@ -1,0 +1,24 @@
+{% extends 'base_investor.html' %} {% block content %}
+
+<div>
+  dashboard
+
+  <h1>List of projects to invest in</h1>
+
+  <div>
+    {% load static %} {% for business in businesses %}
+    <a href="{% url 'investment_detail' business.id %}">
+      <div>
+        <img
+          src="{% static business.image|cut:'main_app/static' %}"
+          alt="lol"
+        />
+        <h1>{{ business.brand }}</h1>
+        <p>{{ business.description }}</p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
