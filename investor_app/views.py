@@ -18,8 +18,6 @@ def investor_detail(request,user_id):
 
 @role_required(allowed_roles=["I"])
 def investment_detail(request):
-    
-    
     return render(request, "investment_detail.html")
 
 
