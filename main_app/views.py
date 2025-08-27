@@ -84,7 +84,7 @@ def contact(request):
 
                 smtp.sendmail(settings.EMAIL_HOST_USER, email, msg_auto)
 
-            return redirect("")
+            return redirect("home")
     else:
         form = ContactForm()
 
