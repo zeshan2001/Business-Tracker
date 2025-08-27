@@ -7,15 +7,19 @@ from main_app.mixins import RoleRequiredMixin
 # Create your views here.
 @role_required(allowed_roles=["I"])
 def investor_dashborad(request):
+    profile = getattr(request.user, "profile", None)
+    print(profile.user_id)
     return render(request, "investor_dasborad.html")
 
 @role_required(allowed_roles=["I"])
-def investor_detail(request):
+def investor_detail(request,user_id):
+    request.user = user_id
     return render(request, "investor_profile.html")
 
 @role_required(allowed_roles=["I"])
 def investment_detail(request):
-    request.profile.user_id
+    
+    
     return render(request, "investment_detail.html")
 
 
