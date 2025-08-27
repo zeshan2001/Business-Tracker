@@ -5,7 +5,6 @@ from django.views.generic.edit import UpdateView,CreateView,DeleteView
 
 class business_Create(CreateView):
     model=Business
-    fields="__all__"
     success_url='/business/'
     def form_valid(self, form):
         form.instance.user=self.request.user

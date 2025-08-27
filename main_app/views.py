@@ -6,8 +6,10 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ProfileForm
+from django.conf import settings
+from .forms import ContactForm
+import smtplib
 # Create your views here.
-
 class CustomLoginView(LoginView):
     template_name = "registration/login.html"
 
@@ -25,12 +27,8 @@ class CustomLoginView(LoginView):
                 return reverse_lazy("bank")
             
         return reverse_lazy("home")
-
 def home(request):
     return render(request, "home.html")
-
-def about(request):
-    return render(request, "contact.html")
 
 def signup(request):
     error_message = ""
@@ -60,3 +58,34 @@ def signup(request):
     }
     return render(request, "registration/signup.html", context)
 
+def contact(request):
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data["email"]
+            message = form.cleaned_data["message"]
+
+            with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
+                smtp.ehlo()
+                smtp.starttls()
+                smtp.ehlo()
+                smtp.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+
+                subject = f'Message from {email}'
+                body = message
+
+                subject_auto = "We Received Your Request"
+                body_auto = "Thank you for reaching out to us. Our team will contact you soon."
+
+                msg = f"Subject: {subject}\n\n{body}"
+                msg_auto = f"Subject: {subject_auto}\n\n{body_auto}"
+
+                smtp.sendmail(email, settings.EMAIL_HOST_USER, msg)
+
+                smtp.sendmail(settings.EMAIL_HOST_USER, email, msg_auto)
+
+            return redirect("")
+    else:
+        form = ContactForm()
+
+        return render(request, "contact.html", {"form": form})
