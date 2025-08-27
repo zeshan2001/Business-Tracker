@@ -5,7 +5,7 @@ from django.views.generic.edit import UpdateView,CreateView,DeleteView
 
 class business_Create(CreateView):
     model=Business
-    fields="__all__"
+    fields=['brand','init_cost']
     success_url='/business/'
     def form_valid(self, form):
         form.instance.user=self.request.user
@@ -14,7 +14,13 @@ class business_Create(CreateView):
 
 class business_Updata(UpdateView):
     model=Business
-    fields="__all__"
+    fields=['brand','init_cost']
+    success_url='/business/'
+    def form_valid(self, form):
+        form.instance.user=self.request.user
+        return super().form_valid(form)
+
+
 class business_Delete(DeleteView):
     model=Business
     success_url='/business/'
