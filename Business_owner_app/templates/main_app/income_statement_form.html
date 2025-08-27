@@ -1,10 +1,7 @@
-{% extends 'baseBusinessOwner.html' %} {% block content %} {% if object %}
-<h1>Edit <span class="teal-text">{{ object.brand }}</span></h1>
+{% extends 'baseBusinessOwner.html' %} {% block content %}
 
-{% else %}
+<h1>Add Income Statement</h1>
 
-<h1>Add Business</h1>
-{% endif %}
 <form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <table>

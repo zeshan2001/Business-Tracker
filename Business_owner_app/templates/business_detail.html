@@ -19,6 +19,10 @@
   {% endif %}
 
   <!-- Income Statements -->
+  <div class="card-action">
+    <a href="{% url 'income_statement' business.id %}">Add Income Statement</a>
+    <a href="{% url 'balance_sheet' business.id %}">Add Balance Sheet</a>
+  </div>
   <h3>Income Statements</h3>
   {% if income_statements %} {% for statement in income_statements %}
   <div class="card" style="margin-bottom: 20px">
