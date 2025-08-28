@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
@@ -9,6 +9,8 @@ from .forms import ProfileForm
 from django.conf import settings
 from .forms import ContactForm
 import smtplib
+from .models import Income_statement, Balance_sheet, Business
+from django.http import JsonResponse
 # Create your views here.
 class CustomLoginView(LoginView):
     template_name = "registration/login.html"
@@ -29,6 +31,12 @@ class CustomLoginView(LoginView):
         return reverse_lazy("home")
 def home(request):
     return render(request, "home.html")
+
+def test(request):
+    business = Business.objects.filter(user = request.user)
+    Income_statement = getattr(business, "income_statement", None)
+    print(Income_statement)
+    return render(request, "test.html")
 
 def signup(request):
     error_message = ""

@@ -1,6 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from main_app.models import Business ,Income_statement,Balance_sheet
 from django.views.generic.edit import UpdateView,CreateView,DeleteView
+import numpy_financial as npf
 # Create your views here.
 
 
@@ -104,14 +105,70 @@ def business(request):
 def business_detail(request, business_id):
     business = get_object_or_404(Business, id=business_id)
     
+    
     # Get and sort financial data by year (most recent first)
     balance_sheets = business.balance_sheets.all().order_by('-year')
     income_statements = business.income_statements.all().order_by('-year')
     
+    def payback_period():
+        new_cost = business.init_cost * -1
+        year = -1
+        cash_flow = []
+        # discount_rate = 0.05
+        reversed_statements_income = business.income_statements.all().order_by('year')
+        if (income_statements):
+            last_amount = reversed_statements_income.last().net_income
+            for inc in reversed_statements_income:
+                if new_cost <= 0:
+                    new_cost += inc.net_income 
+                    year+= 1
+                    cash_flow.append(inc.net_income)
+
+                last_amount = cash_flow[-1]
+            while new_cost <= 0:
+                new_cost += last_amount
+                year += 1
+                cash_flow.append(last_amount)
+            prev_cost = new_cost - last_amount
+            
+            prev_cost = abs(prev_cost)
+            year = round(year + (prev_cost/cash_flow[-1]))
+        return year, cash_flow 
+    year, cash_flow = payback_period()
+
+    def npv():
+        discount_rate = 0.05
+        sum_of_cash = 0
+        for num in range(0, len(cash_flow)):
+            sum_of_cash += float(cash_flow[num]) / float((1+discount_rate)**(num+1))
+            print(cash_flow[num])
+            print(sum_of_cash)
+        npv_value = sum_of_cash - float(business.init_cost)
+        return npv_value
+    
+    npv_value = npv()
+    print(f"this is npv value {npv_value}")
+    # print(year)
+    print(cash_flow)
+
+    def irr():
+        
+        cash_flow_with_init = [-float(business.init_cost)] + [float(cf) for cf in cash_flow]
+        irr = npf.irr(cash_flow_with_init)
+        return irr
+
+    irr_rate = irr()
+    print(irr_rate)
+
+        # npv_value = ( / discount_factor) - float(business.init_cost)
+        # print((float(discount_factor)/float(sum_new_cost)) - float(10000))
+    # Income_statement = getattr(business2, "income_statement", None)
+    # print(Income_statement)
     context = {
         'business': business,
         'balance_sheets': balance_sheets,
         'income_statements': income_statements,
+        "year": year
     }
     return render(request, 'business_detail.html', context)
 
