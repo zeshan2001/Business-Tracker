@@ -103,6 +103,13 @@
           <td>${{ statement.revenue }}</td>
           {% endfor %}
         </tr>
+        <tr></tr>
+        <tr>
+          <td><strong>non Cash Expense</strong></td>
+          {% for statement in income_statements %}
+          <td>${{ statement.non_cash_expense }}</td>
+          {% endfor %}
+        </tr>
         <tr>
           <td><strong>Cost of Goods Sold</strong></td>
           {% for statement in income_statements %}
