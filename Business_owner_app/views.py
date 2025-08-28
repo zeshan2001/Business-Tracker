@@ -31,7 +31,7 @@ class business_Delete(DeleteView):
 
 class income_statement(CreateView):
     model = Income_statement
-    fields = ['revenue', 'cogs', 'operating_expenses', 'net_income', 'year']
+    fields = ['revenue', 'non_cash_expense', 'cogs', 'operating_expenses', 'net_income', 'year']
     success_url = '/business/'
     def get_initial(self):
         initial = super().get_initial()
@@ -74,24 +74,13 @@ class balance_sheet_Delete(DeleteView):
 
 class income_statement_Updata(UpdateView):
     model = Income_statement
-    fields = ['revenue', 'cogs', 'operating_expenses', 'net_income', 'year']
+    fields = ['revenue', 'non_cash_expense', 'cogs', 'operating_expenses', 'net_income', 'year']
     success_url = '/business/'
   
 class income_statement_Delete(DeleteView):
     model = Income_statement
-    fields = ['revenue', 'cogs', 'operating_expenses', 'net_income', 'year']
     success_url = '/business/'
-  
 
-   
-    
-    def form_valid(self, form):
-        # Set the business from URL if provided
-        business_id = self.kwargs.get('business_id')
-        if business_id:
-            form.instance.business = Business.objects.get(id=business_id)
-        return super().form_valid(form)
-    
     
 def business(request):
     businesses=Business.objects.all()
