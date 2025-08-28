@@ -88,7 +88,10 @@
         <tr>
           <th>Years</th>
           {% for statement in income_statements %}
-          <th>Years : {{ statement.year }}</th>
+          <th>
+            Years : {{ statement.year }}
+            <a href="{% url 'income_statement_updata' statement.id %}">edit</a>
+          </th>
           {% endfor %}
         </tr>
       </thead>

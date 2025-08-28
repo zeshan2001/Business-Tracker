@@ -70,6 +70,14 @@ class balance_sheet_Update(UpdateView):
 class balance_sheet_Delete(DeleteView):
     model = Balance_sheet
     success_url = '/business/'
+
+
+class income_statement_Updata(UpdateView):
+    model = Income_statement
+    fields = ['revenue', 'cogs', 'operating_expenses', 'net_income', 'year']
+    success_url = '/business/'
+  
+
    
     
     def form_valid(self, form):
