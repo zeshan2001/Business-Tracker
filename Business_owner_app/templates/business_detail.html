@@ -27,7 +27,11 @@
         <tr>
           <th>Years</th>
           {% for sheet in balance_sheets %}
-          <th>{{ sheet.year }}</th>
+          <th>
+            <a href="{% url 'balance_sheet_Delete' sheet.id %}">❌</a>
+            Year: {{ sheet.year }}
+            <a href="{% url 'balance_sheet_Update' sheet.id %}">edit</a>
+          </th>
           {% endfor %}
         </tr>
       </thead>
@@ -84,7 +88,7 @@
         <tr>
           <th>Years</th>
           {% for statement in income_statements %}
-          <th>{{ statement.year }}</th>
+          <th>Years : {{ statement.year }}</th>
           {% endfor %}
         </tr>
       </thead>
