@@ -30,7 +30,7 @@
           <th>
             <a href="{% url 'balance_sheet_Delete' sheet.id %}">❌</a>
             Year: {{ sheet.year }}
-            <a href="{% url 'balance_sheet_Update' sheet.id %}">edit</a>
+            <a href="{% url 'balance_sheet_Update' sheet.id %}">📝</a>
           </th>
           {% endfor %}
         </tr>
@@ -91,7 +91,7 @@
           <th>
             <a href="{% url 'income_statement_delete' statement.id %}">❌</a>
             Years : {{ statement.year }}
-            <a href="{% url 'income_statement_updata' statement.id %}">edit</a>
+            <a href="{% url 'income_statement_updata' statement.id %}">📝</a>
           </th>
           {% endfor %}
         </tr>
