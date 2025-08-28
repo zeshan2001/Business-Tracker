@@ -27,7 +27,10 @@
         <tr>
           <th>Years</th>
           {% for sheet in balance_sheets %}
-          <th>Year: {{ sheet.year }}</th>
+          <th>
+            Year: {{ sheet.year }}
+            <a href="{% url 'balance_sheet_Update' sheet.id %}">❌</a>
+          </th>
           {% endfor %}
         </tr>
       </thead>
