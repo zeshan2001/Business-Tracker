@@ -28,8 +28,9 @@
           <th>Years</th>
           {% for sheet in balance_sheets %}
           <th>
+            <a href="{% url 'balance_sheet_Delete' sheet.id %}">❌</a>
             Year: {{ sheet.year }}
-            <a href="{% url 'balance_sheet_Update' sheet.id %}">❌</a>
+            <a href="{% url 'balance_sheet_Update' sheet.id %}">edit</a>
           </th>
           {% endfor %}
         </tr>

@@ -1,0 +1,17 @@
+{% extends 'baseBusinessOwner.html' %} {% block content %}
+<h1>Delete Business</h1>
+
+<h4>
+  Are you sure you want to delete
+  <span class="teal-text"> Balance Sheet {{ object.year }}</span>
+</h4>
+
+<form action="" method="post">
+  {% csrf_token %}
+
+  <input type="submit" value="Yes - Delete!" class="btn" />
+
+  <a href="{% url 'business' %}">Cancel</a>
+</form>
+
+{% endblock %}

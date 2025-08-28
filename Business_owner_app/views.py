@@ -65,6 +65,11 @@ class balance_sheet_Update(UpdateView):
     model = Balance_sheet
     fields = ['current_assets', 'non_current_assets', 'cash_equivalents', 'current_liabilities','non_current_liabilities','shareholders_equity', 'year']
     success_url = '/business/'
+
+
+class balance_sheet_Delete(DeleteView):
+    model = Balance_sheet
+    success_url = '/business/'
    
     
     def form_valid(self, form):
