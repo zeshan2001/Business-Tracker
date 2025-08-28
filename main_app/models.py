@@ -39,6 +39,7 @@ class Balance_sheet(models.Model):
 class Income_statement(models.Model):
     business=models.ForeignKey(Business,on_delete=models.CASCADE,related_name='income_statements')
     revenue=models.DecimalField(max_digits=12,decimal_places=2)
+    non_cash_expense = models.DecimalField(max_digits=12, decimal_places=2)
     cogs=models.DecimalField(max_digits=12,decimal_places=2)
     operating_expenses=models.DecimalField(max_digits=12,decimal_places=2)
     net_income=models.DecimalField(max_digits=12,decimal_places=2)

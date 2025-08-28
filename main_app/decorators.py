@@ -8,7 +8,7 @@ def role_required(allowed_roles=[]):
             profile = getattr(request.user, "profile", None)
             if profile and profile.role in allowed_roles:
                 return view_func(request, *args, **kwargs)
-            return redirect("") 
+            return redirect("home") 
         return wrapper
     return decorator
 
