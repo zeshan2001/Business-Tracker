@@ -5,10 +5,10 @@
 
   <h1>List of projects to invest in</h1>
 
-  <div>
+  <div >
     {% load static %} {% for business in businesses %}
     <a href="{% url 'investment_detail' business.id %}">
-      <div>
+      <div style="background-color: aqua;">
         <img
           src="{% static business.image|cut:'main_app/static' %}"
           alt="lol"

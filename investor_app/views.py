@@ -9,8 +9,6 @@ from main_app.models import Business
 @role_required(allowed_roles=["I"])
 def investor_dashborad(request):
     businesses = Business.objects.all()
-    # profile = getattr(request.user, "profile", None)
-    # print(profile.user_id)
     return render(request, "investor_dasborad.html", { 'businesses' : businesses })
 
 @role_required(allowed_roles=["I"])
@@ -19,15 +17,7 @@ def investor_detail(request,user_id):
     return render(request, "investor_profile.html")
 
 @role_required(allowed_roles=["I"])
-def investment_detail(request):
-    return render(request, "investment_detail.html")
-
-
-
-
-
-
-
-
-# 'investments/', investments_show, name='investor'
-# "profile/<int:user_id>", investor_detail, name="investor_profile"
+def investment_detail(request, business_id):
+    business_id = Business.objects.get(id=business_id,)
+    # business = Business.objects.get(id=business_id)
+    return render(request, "investment_detail.html", { 'business_id' : business_id })
