@@ -77,6 +77,11 @@ class income_statement_Updata(UpdateView):
     fields = ['revenue', 'cogs', 'operating_expenses', 'net_income', 'year']
     success_url = '/business/'
   
+class income_statement_Delete(DeleteView):
+    model = Income_statement
+    fields = ['revenue', 'cogs', 'operating_expenses', 'net_income', 'year']
+    success_url = '/business/'
+  
 
    
     
