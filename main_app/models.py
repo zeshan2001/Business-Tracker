@@ -19,8 +19,9 @@ ROLE_CHOICE = (
 class Business(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     brand=models.CharField(max_length=255)
+    description=models.CharField(max_length=255)
+    image=models.ImageField(upload_to='main_app/static/uploads/', default='')
     init_cost=models.DecimalField(max_digits=12,decimal_places=3)
-
 
     def __str__(self):
         return f"{self.brand} (Owner: {self.user.username})"

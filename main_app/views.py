@@ -22,7 +22,7 @@ class CustomLoginView(LoginView):
             if profile.role == "B":
                 return reverse_lazy("business")
             elif profile.role == "I":
-                return reverse_lazy("investor")
+                return reverse_lazy("investor_dashborad")
             elif profile.role == "L":
                 return reverse_lazy("bank")
             
@@ -84,7 +84,7 @@ def contact(request):
 
                 smtp.sendmail(settings.EMAIL_HOST_USER, email, msg_auto)
 
-            return redirect("")
+            return redirect("home")
     else:
         form = ContactForm()
 
