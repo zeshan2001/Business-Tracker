@@ -77,14 +77,14 @@ class income_statement_Updata(UpdateView):
     model = Income_statement
     fields = ['revenue', 'non_cash_expense', 'cogs', 'operating_expenses', 'net_income', 'year']
     success_url = '/business/'
-  
+
 class income_statement_Delete(DeleteView):
     model = Income_statement
     success_url = '/business/'
 
     
 def business(request):
-    businesses=Business.objects.all()
+    businesses=Business.objects.filter(user = request.user)
     return render(request, 'business.html',{'businesses':businesses})
 
 # def business_detail(request, business_id):
