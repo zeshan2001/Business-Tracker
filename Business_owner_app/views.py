@@ -4,10 +4,6 @@ from django.views.generic.edit import UpdateView,CreateView,DeleteView
 import numpy_financial as npf
 # Create your views here.
 
-
-
-
-
 class business_Create(CreateView):
     model=Business
     fields=['brand','init_cost', 'image', 'description']
