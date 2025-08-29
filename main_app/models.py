@@ -56,14 +56,14 @@ class Bank(models.Model):
 
 class Loan(models.Model):
     business = models.ForeignKey(Business, on_delete=models.CASCADE)
-    bank_id = models.ForeignKey(Bank, on_delete=models.CASCADE)
+    bank = models.ForeignKey(Bank, on_delete=models.CASCADE)
     loan_amount = models.DecimalField(max_digits=12 ,decimal_places=2)
     interest_rate = models.DecimalField(max_digits=3, decimal_places=2)
-    start_date= models.DateField
-    end_date = models.DateField
+    start_date= models.DateField(auto_now_add=True)
+    end_date = models.DateField(editable=False)
 
     def __str__(self):
-        return f"Loan to {self.business_id.user_id.username} brand {self.business_id.brand}"
+        return f"Loan to {self.business.user.username} brand {self.business.brand}"
 
 class Request(models.Model):
     business=models.ForeignKey(Business,on_delete=models.CASCADE)
@@ -73,13 +73,15 @@ class Request(models.Model):
     status=models.CharField(max_length=1, choices=REQUEST_CHOICE, default=REQUEST_CHOICE[0][0])
 
     def __str__(self):
-        return f"request from {self.business_id.user_id.username} brand {self.business_id.brand}"
+        return f"request from {self.business.user.username} brand {self.business.brand}"
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bank = models.OneToOneField(Bank, on_delete=models.CASCADE, null=True, blank=True)
 
     role = models.CharField(max_length=1, choices=ROLE_CHOICE, default=ROLE_CHOICE[0][0])
+    email = models.EmailField(max_length=100)
+    phone = models.CharField(max_length=12)
 
     def __str__(self):
         return self.user.username

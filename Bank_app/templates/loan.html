@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  
+  {% if form.fields.business %}
+    {{ form.as_p }}
+    <button type="submit">Create Loan</button>
+  {% else %}
+    <p>No businesses have made requests yet. Cannot create a loan.</p>
+    <button type="submit" disabled>Create Loan</button>
+  {% endif %}
+</form>
+{% endblock %}
+

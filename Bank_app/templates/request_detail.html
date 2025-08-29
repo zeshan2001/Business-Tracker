@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="request_detail">
+    <h1>Company name: <br> {{ request.business.brand }}</h1>
+    <h3>Borrow amount: <br> {{ request.borrow_amount }}</h3>
+    <p>Description: <br> {{ request.description }}</p>
+    <h3>Status request: <span class="pending">{{ request.status }}</span></h3>
+  </div>
+{% endblock %}
