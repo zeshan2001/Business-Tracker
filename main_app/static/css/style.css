@@ -97,3 +97,19 @@ body {
 .pending {
   color: orange
 }
+
+.accepted {
+  color: green
+}
+
+.rejected {
+  color: red
+}
+
+.safe {
+  color: green
+}
+
+.risky {
+  color: red
+}

@@ -40,7 +40,8 @@
           {% if user.is_authenticated and user.profile.role == "L" %}
           <ul class="ul-container">
             <li class="list-container"><a href="{% url 'bank' %}">Home</a></li>
-            <li class="list-container"><a href="{% url 'request' %}">view all request</a></li>
+            <li class="list-container"><a href="{% url 'request' %}">view all requests</a></li>
+            <li class="list-container"><a href="{% url 'create_loan' %}">Create Loan</a></li>
           </ul>
           {% else %}
           <ul class="ul-container">

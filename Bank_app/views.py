@@ -2,11 +2,12 @@ from django.shortcuts import render
 from main_app.models import Bank
 from main_app.decorators import role_required
 from main_app.mixins import RoleRequiredMixin
-from main_app.models import Request, Business, Loan
+from main_app.models import Request, Business, Loan, Balance_sheet, Income_statement
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from datetime import date
 from dateutil.relativedelta import relativedelta
-from .forms import LoanForm
+from .forms import LoanForm, RequestForm
+from django.urls import reverse_lazy
 # Create your views here.
 @role_required(allowed_roles=["L"])
 def bank(request):
@@ -15,13 +16,26 @@ def bank(request):
     return render(request, "bank.html", {"bank": bank})
 
 def request_view(request):
-    bank_requests = Request.objects.filter(bank= request.user.profile.bank)
-
+    bank_requests = Request.objects.filter(bank= request.user.profile.bank, status="P")
     return render(request, "request.html", {"requests": bank_requests})
 
 def request_detail(request, request_id):
     bank_request = Request.objects.get(id = request_id)
-    return render(request, "request_detail.html", {"request": bank_request})
+    balance_sheets = Balance_sheet.objects.filter(business= bank_request.business.id)
+    income_statements = Income_statement.objects.filter(business= bank_request.business.id)
+    income_statement = Income_statement.objects.filter(business= bank_request.business.id).order_by("-year").first()
+    print(income_statement)
+    
+    def debt_service_coverage_ratio():
+        cash_available = income_statement.net_income + income_statement.non_cash_expense
+        loan_payment = bank_request.borrow_amount
+        dscr = cash_available / loan_payment
+        return dscr
+    dscr = debt_service_coverage_ratio()
+
+
+    return render(request, "request_detail.html", {"request": bank_request, "balance_sheets": balance_sheets, "income_statements": income_statements, "DSCR": dscr})
+
 
 class LoanCreate(CreateView):
     model = Loan
@@ -32,7 +46,7 @@ class LoanCreate(CreateView):
         form = super().get_form(form_class)
 
         bank = self.request.user.profile.bank
-        qs = Business.objects.filter(request__bank=bank).distinct()
+        qs = Business.objects.filter(request__bank=bank, request__status="P").distinct()
 
         form.fields["business"].queryset = qs
         if not qs.exists():
@@ -51,3 +65,15 @@ class LoanCreate(CreateView):
         years = int(form.cleaned_data["duration"])
         form.instance.end_date = date.today() + relativedelta(years=years)
         return super().form_valid(form)
+
+class RequestUpdate(UpdateView):
+    model = Request
+    form_class = RequestForm
+    template_name = "request_update.html"
+    success_url = reverse_lazy("request")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["bank_request"] = self.object
+        return context
+    

@@ -2,9 +2,142 @@
 
 {% block content %}
   <div class="request_detail">
-    <h1>Company name: <br> {{ request.business.brand }}</h1>
-    <h3>Borrow amount: <br> {{ request.borrow_amount }}</h3>
-    <p>Description: <br> {{ request.description }}</p>
-    <h3>Status request: <span class="pending">{{ request.status }}</span></h3>
+    <h1>Company name: {{ request.business.brand }}</h1>
+    <h3>Owner name: {{ request.business.user.username }}</h3>
+    <h3>Borrow amount: {{ request.borrow_amount }}</h3>
+    <p>Description: {{ request.description }}</p>
+    {% if request.status == "P" %}
+    <h3>Status request: <span class="pending">
+    Pending</span></h3>
+    {% elif request.status == "A" %}
+    <h3>Status request: <span class="accepted">
+    Accepted</span></h3>
+    {% else %}
+    <h3>Status request: <span class="rejected">
+    Rejected</span></h3>
+    {% endif %}
   </div>
+  <div>
+    <a href="{% url 'request_update' request.id %}">Edit</a>
+  </div>
+{% if balance_sheets %}
+  <div class="card">
+    <h3>Balance Sheet</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Years</th>
+          {% for sheet in balance_sheets %}
+          <th>
+            Year: {{ sheet.year }}
+          </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Current Assets</strong></td>
+          {% for sheet in balance_sheets %}
+          <td>${{ sheet.current_assets }}</td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <td><strong>Non-Current Assets</strong></td>
+          {% for sheet in balance_sheets %}
+          <td>${{ sheet.non_current_assets }}</td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <td><strong>Cash & Equivalents</strong></td>
+          {% for sheet in balance_sheets %}
+          <td>${{ sheet.cash_equivalents }}</td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <td><strong>Current Liabilities</strong></td>
+          {% for sheet in balance_sheets %}
+          <td>${{ sheet.current_liabilities }}</td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <td><strong>Non-Current Liabilities</strong></td>
+          {% for sheet in balance_sheets %}
+          <td>${{ sheet.non_current_liabilities }}</td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <td><strong>Shareholders Equity</strong></td>
+          {% for sheet in balance_sheets %}
+          <td>${{ sheet.shareholders_equity }}</td>
+          {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p>No balance sheets available.</p>
+  {% endif %}
+
+  <!-- Income Statement Table -->
+  {% if income_statements %}
+  <div class="card">
+    <h3>Income Statement</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Years</th>
+          {% for statement in income_statements %}
+          <th>
+            Years : {{ statement.year }}
+          </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Revenue</strong></td>
+          {% for statement in income_statements %}
+          <td>${{ statement.revenue }}</td>
+          {% endfor %}
+        </tr>
+        <tr></tr>
+        <tr>
+          <td><strong>non Cash Expense</strong></td>
+          {% for statement in income_statements %}
+          <td>${{ statement.non_cash_expense }}</td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <td><strong>Cost of Goods Sold</strong></td>
+          {% for statement in income_statements %}
+          <td>${{ statement.cogs }}</td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <td><strong>Operating Expenses</strong></td>
+          {% for statement in income_statements %}
+          <td>${{ statement.operating_expenses }}</td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <td><strong>Net Income</strong></td>
+          {% for statement in income_statements %}
+          <td>${{ statement.net_income }}</td>
+          {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  {% else %}
+  <p>No income statements available.</p>
+  {% endif %}
+  <div>
+    {% if DSCR > 1 %}
+    <h1 class="safe">DSCR: {{ DSCR }} safe to loan</h1>
+    {% else %}
+    <h1 class="risky">DSCR: {{ DSCR }} risky to loan</h1>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}

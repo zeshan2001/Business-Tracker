@@ -1,19 +1,17 @@
-{% extends "base.html" %}
-
-{% block content %}
-  <div class="requests-container">
-    {% for request in requests %}
-    <a href="{{ request.id }}">
+{% extends "base.html" %} {% block content %}
+<div class="requests-container">
+  {% for request in requests %} 
       <div class="request">
         <h1>{{ request.business.brand }}</h1>
         <h4>{{ request.borrow_amount }}</h4>
         <p>{{ request.description }}</p>
-        <span class="pending">{{ request.status }}</span>
+        <h3>Status request: <span class="pending"> Pending</span></h3>
+        <div>
+          <a href="{% url 'request_detail' request.id %}"><button>Review request</button></a>
+        </div>
       </div>
-    </a>
-    {% endfor %}
-    <div>
-      <a href="{% url 'create_loan' %}"><h3 class="loan">Add Loan</h3></a>
-    </div>
-  </div>
+    {% empty %}
+    <p>There is no request yet</p>
+  {% endfor %}
+</div>
 {% endblock %}
