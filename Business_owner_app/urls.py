@@ -14,6 +14,6 @@ urlpatterns = [
     path('create/<int:pk>/updata/',views.business_Updata.as_view(),name='business_updata'),
     path('<int:pk>/delete/',views.business_Delete.as_view(),name='business_delete'),
     path('list-banks/',views.list_Bank,name='list-banks'),
-    path('list-banks/create/',views.create_Request.as_view(),name='create_Request'),
+    path('banks/<int:bank_id>/create-request/', views.Create_Request.as_view(), name='create_request'),
     path("profile", views.profile, name="Profile")
 ]
