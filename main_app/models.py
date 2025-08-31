@@ -80,8 +80,8 @@ class Profile(models.Model):
     bank = models.OneToOneField(Bank, on_delete=models.CASCADE, null=True, blank=True)
 
     role = models.CharField(max_length=1, choices=ROLE_CHOICE, default=ROLE_CHOICE[0][0])
-    email = models.EmailField(max_length=100)
-    phone = models.CharField(max_length=12)
+    email = models.EmailField(max_length=100, null=True, blank=True)
+    phone = models.CharField(max_length=12, null=True, blank=True)
 
     def __str__(self):
         return self.user.username

@@ -4,6 +4,7 @@ from main_app.decorators import role_required
 from main_app.mixins import RoleRequiredMixin
 from main_app.models import Request, Business, Loan, Balance_sheet, Income_statement
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
+from django.views.generic import View
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from .forms import LoanForm, RequestForm
@@ -37,6 +38,8 @@ def request_detail(request, request_id):
     return render(request, "request_detail.html", {"request": bank_request, "balance_sheets": balance_sheets, "income_statements": income_statements, "DSCR": dscr})
 
 
+
+
 class LoanCreate(CreateView):
     model = Loan
     form_class = LoanForm
@@ -44,17 +47,17 @@ class LoanCreate(CreateView):
     template_name = "loan.html"
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-
         bank = self.request.user.profile.bank
-        qs = Business.objects.filter(request__bank=bank, request__status="P").distinct()
+        qs = Business.objects.filter(request__bank=bank, request__status="A").distinct()
+
+        qs = qs.exclude(loan__bank=bank)
 
         form.fields["business"].queryset = qs
         if not qs.exists():
             form.fields["business"].disabled = True
             form.fields["business"].empty_label = "No businesses with requests"
-
         return form
-
+    
     def form_valid(self, form):
         if "business" not in form.fields:
             form.add_error(None, "No businesses have made requests yet.")
@@ -65,6 +68,17 @@ class LoanCreate(CreateView):
         years = int(form.cleaned_data["duration"])
         form.instance.end_date = date.today() + relativedelta(years=years)
         return super().form_valid(form)
+    
+
+class RequstDetail(View):
+    def get(self, request, business_id):
+        bank_request = Request.objects.filter(
+            business_id = business_id, bank= request.user.profile.bank
+        ).first()
+
+        return render(request, "request_detail_loan.html", {"request": bank_request})
+
+
 
 class RequestUpdate(UpdateView):
     model = Request
@@ -76,4 +90,3 @@ class RequestUpdate(UpdateView):
         context = super().get_context_data(**kwargs)
         context["bank_request"] = self.object
         return context
-    
