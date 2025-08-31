@@ -6,9 +6,15 @@
   <div>
     {% load static %}
     <div style="background-color: aqua">
-      <img src="{% static business_id.image|cut:'main_app/static' %}" alt="lol" />
+      <img
+        src="{% static business_id.image|cut:'main_app/static' %}"
+        alt="lol"
+      />
       <h1>{{ business_id.brand }}</h1>
       <p>{{ business_id.description }}</p>
+      <h4>Contact Info:</h4>
+      <h5>{{ owner.email }}</h5>
+      <h5>{{ owner.phone }}</h5>
     </div>
   </div>
 
@@ -17,8 +23,8 @@
     <!-- <li>image</li> -->
     <!-- <li>brand</li> -->
     <!-- <li>description</li> -->
-    <li>owner email</li>
-    <li>owner phone</li>
+    <!-- <li>owner email</li> -->
+    <!-- <li>owner phone</li> -->
     <li>business Cost Analysis</li>
     <li>NPV Profile</li>
   </ul>
