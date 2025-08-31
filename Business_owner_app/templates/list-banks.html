@@ -1,0 +1,13 @@
+{% extends 'baseBusinessOwner.html' %} {% block content %}
+
+<div>
+  {% for bank in listOfbanks %}
+  <div>
+    <h2>Name: {{ bank.name }}</h2>
+    <h2>address: {{ bank.address }}</h2>
+    <h2>phone: {{ bank.phone }}</h2>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
