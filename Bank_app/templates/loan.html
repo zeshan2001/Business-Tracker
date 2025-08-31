@@ -3,14 +3,32 @@
 {% block content %}
 <form method="post">
   {% csrf_token %}
-  
   {% if form.fields.business %}
-    {{ form.as_p }}
+  {{ form.as_p }}
+  
+  <div id="request-detail-box"></div>
+
     <button type="submit">Create Loan</button>
   {% else %}
     <p>No businesses have made requests yet. Cannot create a loan.</p>
     <button type="submit" disabled>Create Loan</button>
   {% endif %}
 </form>
+<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+<script>
+  document.addEventListener("change", function(e) {
+    if (e.target.id === "id_business") {
+      let businessId = e.target.value;
+      if (businessId) {
+        fetch(`/bank/request-detail/${businessId}/`)
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById("request-detail-box").innerHTML = html;
+          });
+      }
+    }
+  });
+</script>
+
 {% endblock %}
 
