@@ -14,7 +14,7 @@ class business_Create(CreateView):
         return super().form_valid(form)
 
 
-class business_Updata(UpdateView):
+class business_Update(UpdateView):
     model=Business
     fields=['brand','init_cost', 'image', 'description']
     success_url='/business/'
@@ -77,7 +77,7 @@ class balance_sheet_Delete(DeleteView):
     success_url = '/business/'
 
 
-class income_statement_Updata(UpdateView):
+class income_statement_Update(UpdateView):
     model = Income_statement
     fields = ['revenue', 'non_cash_expense', 'cogs', 'operating_expenses', 'net_income', 'year']
     success_url = '/business/'

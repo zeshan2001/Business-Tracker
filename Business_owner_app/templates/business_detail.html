@@ -91,7 +91,7 @@
           <th>
             <a href="{% url 'income_statement_delete' statement.id %}">❌</a>
             Years : {{ statement.year }}
-            <a href="{% url 'income_statement_updata' statement.id %}">📝</a>
+            <a href="{% url 'income_statement_update' statement.id %}">📝</a>
           </th>
           {% endfor %}
         </tr>
