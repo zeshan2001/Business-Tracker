@@ -1,6 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from main_app.models import Business ,Income_statement,Balance_sheet,Bank,Request
 from django.views.generic.edit import UpdateView,CreateView,DeleteView
+from django.urls import reverse_lazy
 import numpy_financial as npf
 # Create your views here.
 
@@ -94,7 +95,7 @@ def list_Bank(request):
 class Create_Request(CreateView):
     model = Request
     fields = ['borrow_amount', 'description']  # Only include fields the user should fill
-    success_url = '/'
+    success_url = reverse_lazy('list-banks')
     
     def get_initial(self):
         initial = super().get_initial()
