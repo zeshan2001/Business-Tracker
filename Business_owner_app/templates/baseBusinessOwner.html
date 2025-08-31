@@ -13,6 +13,11 @@
     />
     <title>Track your business</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0"></script>
+    <style>
+        canvas { margin: 30px auto; display: block; }
+    </style>
   </head>
   <body>
     <header class="bg-gradient-to-r from-blue-600 to-blue-800 shadow-lg">
@@ -65,11 +70,13 @@
                   </a>
                 </li>
                 <li>
-                  <form
-                    action="{% url 'logout' %}"
-                    method="post"
-                    class="inline"
-                  >
+                  <a href="{% url 'dashboard' %}" 
+                    class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200">
+                    Dashboard
+                  </a>
+                </li>
+                <li>
+                  <form action="{% url 'logout' %}" method="post" class="inline">
                     {% csrf_token %}
                     <button
                       type="submit"
