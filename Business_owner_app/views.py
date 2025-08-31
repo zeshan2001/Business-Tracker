@@ -1,8 +1,12 @@
 from django.shortcuts import render,get_object_or_404
-from main_app.models import Business ,Income_statement,Balance_sheet,Bank,Request
+from main_app.models import Business ,Income_statement,Balance_sheet,Bank,Request, Profile
 from django.views.generic.edit import UpdateView,CreateView,DeleteView
 from django.urls import reverse_lazy
 import numpy_financial as npf
+from django.contrib.auth.models import User
+from django.views import View
+
+
 # Create your views here.
 
 class business_Create(CreateView):
@@ -199,5 +203,9 @@ def business_detail(request, business_id):
     }
     return render(request, 'business_detail.html', context)
 
-def profile(request):
-    return render(request,'profile.html')
+
+class ProfileView(View):
+
+    def get(self, request):
+        owner = Profile.objects.get( user=request.user)
+        return render(request, 'profile.html', {'owner': owner})
