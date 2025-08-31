@@ -4,7 +4,7 @@ from django import forms
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ["role"]
+        fields = ["role", "email","phone"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
