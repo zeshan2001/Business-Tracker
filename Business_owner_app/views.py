@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404
-from main_app.models import Business ,Income_statement,Balance_sheet
+from main_app.models import Business ,Income_statement,Balance_sheet,Bank
 from django.views.generic.edit import UpdateView,CreateView,DeleteView
 import numpy_financial as npf
 # Create your views here.
@@ -57,6 +57,13 @@ class balance_sheet(CreateView):
             initial['business'] = Business.objects.get(id=business_id)
         return initial
     
+    def form_valid(self, form):
+        # Set the business from URL if provided
+        business_id = self.kwargs.get('business_id')
+        if business_id:
+            form.instance.business = Business.objects.get(id=business_id)
+        return super().form_valid(form)
+    
 
 class balance_sheet_Update(UpdateView):
     model = Balance_sheet
@@ -78,7 +85,17 @@ class income_statement_Delete(DeleteView):
     model = Income_statement
     success_url = '/business/'
 
-    
+
+def list_Bank(request):
+    listOfbanks=Bank.objects.all()
+    return render(request,'list-banks.html',{'listOfbanks':listOfbanks})
+
+
+class create_Request(CreateView):
+    model = Income_statement
+    success_url = '/business/'
+
+
 def business(request):
     businesses=Business.objects.filter(user = request.user)
     return render(request, 'business.html',{'businesses':businesses})
