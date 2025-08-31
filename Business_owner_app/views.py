@@ -1,6 +1,7 @@
 from django.shortcuts import render,get_object_or_404
-from main_app.models import Business ,Income_statement,Balance_sheet
+from main_app.models import Business ,Income_statement,Balance_sheet,Bank,Request
 from django.views.generic.edit import UpdateView,CreateView,DeleteView
+from django.urls import reverse_lazy
 import numpy_financial as npf
 # Create your views here.
 
@@ -57,6 +58,13 @@ class balance_sheet(CreateView):
             initial['business'] = Business.objects.get(id=business_id)
         return initial
     
+    def form_valid(self, form):
+        # Set the business from URL if provided
+        business_id = self.kwargs.get('business_id')
+        if business_id:
+            form.instance.business = Business.objects.get(id=business_id)
+        return super().form_valid(form)
+    
 
 class balance_sheet_Update(UpdateView):
     model = Balance_sheet
@@ -78,22 +86,45 @@ class income_statement_Delete(DeleteView):
     model = Income_statement
     success_url = '/business/'
 
+
+def list_Bank(request):
+    listOfbanks=Bank.objects.all()
+    return render(request,'list-banks.html',{'listOfbanks':listOfbanks})
+
+
+class Create_Request(CreateView):
+    model = Request
+    fields = ['borrow_amount', 'description']  # Only include fields the user should fill
+    success_url = reverse_lazy('list-banks')
     
+    def get_initial(self):
+        initial = super().get_initial()
+        # Pre-fill the bank field from URL parameter
+        bank_id = self.kwargs.get('bank_id')
+        if bank_id:
+            initial['bank'] = get_object_or_404(Bank, id=bank_id)
+        return initial
+    
+    def form_valid(self, form):
+        # Set the business from the current user
+        user_business = get_object_or_404(Business, user=self.request.user)
+        form.instance.business = user_business
+        
+        # Set the bank from URL parameter
+        bank_id = self.kwargs.get('bank_id')
+        if bank_id:
+            form.instance.bank = get_object_or_404(Bank, id=bank_id)
+        
+        # Always set status to "P" (Pending)
+        form.instance.status = "P"
+        
+        return super().form_valid(form)
+
+
+
 def business(request):
     businesses=Business.objects.filter(user = request.user)
     return render(request, 'business.html',{'businesses':businesses})
-
-# def business_detail(request, business_id):
-#     business = get_object_or_404(Business, id=business_id)
-#     balance_sheets = business.balance_sheets.all()  
-#     income_statements = business.income_statements.all()
-#     context = {
-#         'business': business,
-#         'balance_sheets': balance_sheets,
-#         'income_statements': income_statements,
-#     }
-#     return render(request, 'business_detail.html', context)
-
 
 
 

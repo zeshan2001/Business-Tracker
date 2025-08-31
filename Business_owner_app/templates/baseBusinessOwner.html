@@ -22,37 +22,59 @@
             <div class="flex space-x-8 items-center">
               <!-- Logo or Brand Name could go here -->
               <span class="text-white font-bold text-xl">Business Tracker</span>
-              
+
               <ul class="flex space-x-8">
                 <li>
-                  <a href="{% url 'home' %}" 
-                     class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200">
+                  <a
+                    href="{% url 'home' %}"
+                    class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200"
+                  >
                     Home
                   </a>
                 </li>
                 <li>
-                  <a href="{% url 'contact' %}" 
-                     class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200">
+                  <a
+                    href="{% url 'contact' %}"
+                    class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200"
+                  >
                     Contact us
                   </a>
                 </li>
                 <li>
-                  <a href="{% url 'business' %}" 
-                     class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200">
+                  <a
+                    href="{% url 'business' %}"
+                    class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200"
+                  >
                     Business
                   </a>
                 </li>
                 <li>
-                  <a href="{% url 'Profile' %}" 
-                     class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200">
+                  <a
+                    href="{% url 'list-banks' %}"
+                    class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200"
+                  >
+                    add Request
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="{% url 'Profile' %}"
+                    class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200"
+                  >
                     Profile
                   </a>
                 </li>
                 <li>
-                  <form action="{% url 'logout' %}" method="post" class="inline">
+                  <form
+                    action="{% url 'logout' %}"
+                    method="post"
+                    class="inline"
+                  >
                     {% csrf_token %}
-                    <button type="submit" 
-                            class="text-white hover:text-red-300 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-red-300">
+                    <button
+                      type="submit"
+                      class="text-white hover:text-red-300 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-red-300"
+                    >
                       Logout
                     </button>
                   </form>
