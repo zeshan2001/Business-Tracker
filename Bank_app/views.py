@@ -50,6 +50,8 @@ class LoanCreate(CreateView):
         bank = self.request.user.profile.bank
         qs = Business.objects.filter(request__bank=bank, request__status="A").distinct()
 
+        qs = qs.exclude(loan__bank=bank)
+
         form.fields["business"].queryset = qs
         if not qs.exists():
             form.fields["business"].disabled = True
