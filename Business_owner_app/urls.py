@@ -15,7 +15,7 @@ urlpatterns = [
     path('<int:pk>/delete/',views.business_Delete.as_view(),name='business_delete'),
     path('list-banks/',views.list_Bank,name='list-banks'),
     path('banks/<int:bank_id>/create-request/', views.Create_Request.as_view(), name='create_request'),
-    path("profile", views.ProfileView.as_view(), name="Profile"),
-    # path("profile", views.profile, name="Profile"),
-    # path("profile", views.profile, name="Profile"),
+    path("profile/", views.ProfileDetail.as_view(), name="Profile"),
+    path("profile/update/", views.ProfileUpdate.as_view(), name="ProfileUpdate"),
+    path("profile/delete/", views.ProfileDelete.as_view(), name="ProfileDelete"),
 ]
