@@ -1,13 +1,46 @@
-{% extends 'baseBusinessOwner.html' %} {% block content %}
+{% extends 'baseBusinessOwner.html' %} 
+{% block content %}
 
-<h1>Add Request</h1>
+<div class="request-form-wrapper">
+    <div class="request-form-header">
+        <h1 class="request-form-title">Submit New Request</h1>
+        <p class="request-form-subtitle">Please fill in the details below</p>
+    </div>
 
-<form action="" method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  <table>
-    {{ form.as_table }}
-  </table>
-  <input type="submit" value="Submit!" class="btn" />
-</form>
+    <form action="" method="post" enctype="multipart/form-data" class="request-form-content">
+        {% csrf_token %}
+        
+        <div class="request-form-grid">
+            {% for field in form %}
+                <div class="request-field-group">
+                    <label for="{{ field.id_for_label }}" class="request-field-label">
+                        {{ field.label }}
+                        {% if field.field.required %}
+                            <span class="request-required-mark">*</span>
+                        {% endif %}
+                    </label>
+                    <div class="request-input-wrapper">
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small class="request-help-text">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="request-error-message">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="request-form-actions">
+            <button type="submit" class="request-submit-btn">
+                Submit Request
+            </button>
+            <a href="javascript:history.back()" class="request-cancel-btn">Cancel</a>
+        </div>
+    </form>
+</div>
 
 {% endblock %}
