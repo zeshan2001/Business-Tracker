@@ -1,14 +1,18 @@
-from django.shortcuts import render
-from main_app.models import Bank
+from django.shortcuts import render,get_object_or_404, redirect
+from main_app.models import Request, Business, Loan, Balance_sheet, Income_statement, Profile, Bank
 from main_app.decorators import role_required
 from main_app.mixins import RoleRequiredMixin
-from main_app.models import Request, Business, Loan, Balance_sheet, Income_statement
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.views.generic import View
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from .forms import LoanForm, RequestForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy 
+from django.contrib.auth import update_session_auth_hash
+
+
+
+
 # Create your views here.
 @role_required(allowed_roles=["L"])
 def bank(request):
@@ -90,3 +94,50 @@ class RequestUpdate(UpdateView):
         context = super().get_context_data(**kwargs)
         context["bank_request"] = self.object
         return context
+
+
+# Profile
+
+
+class ProfileDetail(View):
+
+    def get(self, request):
+        owner = Profile.objects.get(user=request.user)
+        return render(request, 'Bank_Profile.html', {'owner': owner})
+
+class ProfileUpdate(UpdateView):
+    model = Profile
+    fields = []
+    # fields = ['email', 'phone']
+    template_name = 'Bank_Profile_Update.html'
+    success_url = reverse_lazy('Bank_Profile')
+    
+    def get_object(self, queryset=None):
+        return get_object_or_404(Profile, user=self.request.user)
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        # Check if password was submitted in the request
+        new_password = self.request.POST.get('password')
+        if new_password:
+            user = self.request.user
+            user.set_password(new_password)  # hashes automatically
+            user.save()
+            # keep the user logged in after password change
+            update_session_auth_hash(self.request, user)
+
+        return response
+
+
+# class ProfileDelete(View):
+#     def get(self, request):
+#         owner = get_object_or_404(Profile, user=request.user)
+#         return render(request, 'Bank_profile_confirm_delete.html', {'owner': owner})
+
+#     def post(self, request):
+#         owner = get_object_or_404(Profile, user=request.user)
+#         user = owner.user   # grab linked auth.User
+#         owner.delete()      # delete profile
+#         user.delete()        # delete user
+#         return redirect('home')  

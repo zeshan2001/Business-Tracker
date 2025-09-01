@@ -1,0 +1,17 @@
+{% extends 'base_bank.html' %} {% block content %}
+
+<h1>this should show</h1>
+<div>
+  <h1>Edit Your Profile</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    <table>
+      <label for="id_password">New Password:</label>
+      <input type="password" name="password" id="id_password" />
+    </table>
+
+    <button type="submit">Submit!</button>
+  </form>
+</div>
+{% endblock %}
