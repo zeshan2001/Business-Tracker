@@ -1,24 +1,47 @@
-{% extends "baseBusinessOwner.html" %} {% block content %}
+{% extends "baseBusinessOwner.html" %} 
+{% block content %}
 
-<div>
-  <h2>user: {{ owner.user }}</h2>
-  <!-- <h2>bank: {{ owner.bank }}</h2> -->
-  <!-- <h2>role: {{ owner.role }}</h2> -->
-  <h2>email: {{ owner.email }}</h2>
-  <h2>phone: {{ owner.phone }}</h2>
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <span class="avatar-text">{{ owner.user.username|first|upper }}</span>
+        </div>
+        <h1 class="profile-title">Profile Information</h1>
+    </div>
+
+    <div class="profile-card">
+        <div class="info-grid">
+            <div class="info-item">
+                <label class="info-label">Username</label>
+                <p class="info-value">{{ owner.user }}</p>
+            </div>
+            
+            <div class="info-item">
+                <label class="info-label">Email Address</label>
+                <p class="info-value">{{ owner.email }}</p>
+            </div>
+
+            <div class="info-item">
+                <label class="info-label">Phone Number</label>
+                <p class="info-value">{{ owner.phone }}</p>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <a href="{% url 'ProfileUpdate' %}" class="action-button edit-button">
+                <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+                Update Profile
+            </a>
+            <a href="{% url 'ProfileDelete' %}" class="action-button delete-button">
+                <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+                Delete Profile
+            </a>
+        </div>
+    </div>
 </div>
-<hr />
-<ul>
-  <li><a href="{% url 'ProfileUpdate' %}">Update Profile</a></li>
-  <li><a href="{% url 'ProfileDelete' %}">Delete Profile</a></li>
-</ul>
-
-<!-- 
-    user
-    bank 
-    role 
-    email
-    phone
--->
 
 {% endblock %}

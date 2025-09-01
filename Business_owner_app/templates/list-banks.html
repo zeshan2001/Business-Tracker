@@ -1,17 +1,42 @@
-{% extends 'baseBusinessOwner.html' %} {% block content %}
+{% extends 'baseBusinessOwner.html' %}
+{% block content %}
 
-<div
-  class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
->
-  {% for bank in listOfbanks %}
-  <a href="{% url 'create_request' bank_id=bank.id %}">
-    <div>
-      <h2>Name: {{ bank.name }}</h2>
-      <h2>address: {{ bank.address }}</h2>
-      <h2>phone: {{ bank.phone }}</h2>
+<div class="banks-container">
+    <div class="banks-header">
+        <h1 class="page-title">Available Banks</h1>
+        <p class="page-subtitle">Select a bank to create a loan request</p>
     </div>
-  </a>
-  {% endfor %}
+
+    <div class="banks-table-container">
+        <table class="banks-table">
+            <thead>
+                <tr>
+                    <th>Bank Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bank in listOfbanks %}
+                <tr class="bank-row">
+                    <td class="bank-name">{{ bank.name }}</td>
+                    <td class="bank-address">{{ bank.address }}</td>
+                    <td class="bank-phone">{{ bank.phone }}</td>
+                    <td class="bank-action">
+                        <a href="{% url 'create_request' bank_id=bank.id %}" class="request-button">
+                            Create Request
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="empty-message">No banks available at the moment.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 {% endblock %}
