@@ -91,13 +91,8 @@
           {% for statement in income_statements %}
           <th>
             <a href="{% url 'income_statement_delete' statement.id %}">❌</a>
-<<<<<<< HEAD
             Years : {{ statement.year }}
             <a href="{% url 'income_statement_update' statement.id %}">📝</a>
-=======
-            Year: {{ statement.year }}
-            <a href="{% url 'income_statement_updata' statement.id %}">📝</a>
->>>>>>> 98450cdcabfd207883e156e1c2ffd07ed8e5e411
           </th>
           {% endfor %}
         </tr>
