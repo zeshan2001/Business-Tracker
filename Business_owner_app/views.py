@@ -295,52 +295,44 @@ class ProfileDelete(View):
 def dashboard(request):
     user_income_statements = Income_statement.objects.select_related('business').filter(business__user=request.user)
 
-    # New data for User Businesses chart
-    # Example: One user with multiple businesses
-    business_labels = []
-    revenue_data = []
-    years_array = []
-    cost_data = []
-    revenue_cost_over_year = []
-
-    # temporary dict to sum values per year
+    # aggregate by business
+    business_data = {}
     yearly_data = {}
-
     for single in user_income_statements:
         year = single.year
+        business = single.business.brand
         revenue = float(single.revenue)
         cost = float(single.cogs) + float(single.operating_expenses)
 
-        business_labels.append(single.business.brand)
-        revenue_data.append(revenue)
-        cost_data.append(cost)
-        years_array.append(year)
-
-        # aggregate by year
+        # aggregate per year
         if year not in yearly_data:
             yearly_data[year] = {"revenue": 0.0, "cost": 0.0}
         yearly_data[year]["revenue"] += revenue
         yearly_data[year]["cost"] += cost
 
-    # now build the final sss array (aggregated)
+        # aggregate per business
+        if business not in business_data:
+            business_data[business] = {"revenue": 0.0, "cost": 0.0}
+        business_data[business]["revenue"] += revenue
+        business_data[business]["cost"] += cost
+
+    # build yearly array
+    revenue_cost_over_year = []
     for year, vals in yearly_data.items():
         revenue_cost_over_year.append({
             "year": year,
             "revenue": vals["revenue"],
             "cost": vals["cost"]
         })
-    print(f"sss::: {revenue_cost_over_year}")
-    # [{'year': '2022', 'revenue': 10250000.0, 'cost': 184586.0}, {'year': '2023', 'revenue': 32124.0, 'cost': 739.0}]
 
+    business_labels = list(business_data.keys())
+    revenue_data = [vals["revenue"] for vals in business_data.values()]
+    cost_data = [vals["cost"] for vals in business_data.values()]
 
-    # Example: revenue and cost across years
-    years = []
-    revenue = []
-    cost = []
-    for single in revenue_cost_over_year:
-        years.append(single['year'])
-        revenue.append(single['revenue'])
-        cost.append(single['cost'])
+    years = [single["year"] for single in revenue_cost_over_year]
+    revenue = [single["revenue"] for single in revenue_cost_over_year]
+    cost = [single["cost"] for single in revenue_cost_over_year]
+
     context = {
         "business_labels": business_labels,
         "revenue_data": revenue_data,
@@ -348,6 +340,6 @@ def dashboard(request):
         "years": years,
         "revenue": revenue,
         "cost": cost,
-
     }
     return render(request, 'dashboard.html', context)
+
