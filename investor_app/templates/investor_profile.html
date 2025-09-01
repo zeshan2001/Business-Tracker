@@ -1,10 +1,29 @@
-{% extends 'base_investor.html' %}
-{% block content %}
+{% extends 'base_investor.html' %} {% block content %}
 
 <div>
   <h1>Profile of the invester!</h1>
 
   profile information
-</div>
 
+  <div>
+    <h2>user: {{ owner.user }}</h2>
+    <!-- <h2>bank: {{ owner.bank }}</h2> -->
+    <!-- <h2>role: {{ owner.role }}</h2> -->
+    <h2>email: {{ owner.email }}</h2>
+    <h2>phone: {{ owner.phone }}</h2>
+  </div>
+  <hr />
+  <ul>
+    <li><a href="{% url 'Investor_Profile_Update' %}">Update Profile</a></li>
+    <li><a href="{% url 'Investor_Profile_Delete' %}">Delete Profile</a></li>
+  </ul>
+</div>
 {% endblock %}
+
+<!-- 
+    user
+    bank 
+    role 
+    email
+    phone
+-->

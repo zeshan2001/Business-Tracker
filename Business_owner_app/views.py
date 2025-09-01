@@ -3,11 +3,11 @@ from main_app.models import Business ,Income_statement,Balance_sheet,Bank,Reques
 from django.views.generic.edit import UpdateView,CreateView,DeleteView
 from django.urls import reverse_lazy
 import numpy_financial as npf
-from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
-
 from django.views import View
+
 from main_app.forms import ProfileForm
+from django.contrib.auth.models import User
 
 # Create your views here.
 
