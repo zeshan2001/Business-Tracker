@@ -4,7 +4,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'css/businessStyle.css' %}" />
+    <!-- <link rel="stylesheet" href="{% static 'css/businessStyle.css' %}" /> -->
+    <link rel="stylesheet" href="{% static 'css/business_owner_app_style/business_owner_app_base.css' %}" />
     <link
       rel="icon"
       type="image/png"
@@ -12,73 +13,32 @@
       href="{% static 'images/icon.png' %}"
     />
     <title>Track your business</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0"></script>
     <style>
         canvas { margin: 30px auto; display: block; }
     </style>
   </head>
-  <body>
-    <header class="bg-gradient-to-r from-blue-600 to-blue-800 shadow-lg">
-      <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-          <div class="flex">
-            <div class="flex space-x-8 items-center">
-              <!-- Logo or Brand Name could go here -->
-              <span class="text-white font-bold text-xl">Business Tracker</span>
+  <body class="app-container">
+    <header class="main-header">
+      <h3 class="logo">Business Tracker</h3>
+      <nav class="main-nav">
+            <a href="{% url 'business' %}" class="nav-item nav-active">Business</a>
+            <a href="{% url 'dashboard' %}" class="nav-item">Dashboard</a>
+            <a href="{% url 'list-banks' %}" class="nav-item">New Request</a>
+            <a href="{% url 'Profile' %}" class="nav-item">Profile</a>
 
-              <ul class="flex space-x-8">
-                <li>
-                  <a
-                    href="{% url 'business' %}"
-                    class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200"
-                  >
-                    Business
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="{% url 'list-banks' %}"
-                    class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200"
-                  >
-                    add Request
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="{% url 'Profile' %}"
-                    class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200"
-                  >
-                    Profile
-                  </a>
-                </li>
-                <li>
-                  <a href="{% url 'dashboard' %}" 
-                    class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-blue-200">
-                    Dashboard
-                  </a>
-                </li>
-                <li>
-                  <form action="{% url 'logout' %}" method="post" class="inline">
-                    {% csrf_token %}
-                    <button
-                      type="submit"
-                      class="text-white hover:text-red-300 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out border-b-2 border-transparent hover:border-red-300"
-                    >
-                      Logout
-                    </button>
-                  </form>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+            <form action="{% url 'logout' %}" method="post" class="logout-form">
+              {% csrf_token %}
+              <button class="nav-item logout-btn" type="submit">Logout</button>
+            </form>
       </nav>
     </header>
-
     <main>{% block content %} {% endblock %}</main>
 
-    <footer></footer>
+    <footer class="main-footer">
+      <p class="footer-text">Cover template for <a href="https://getbootstrap.com/" class="footer-link">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="footer-link">@mdo</a>.</p>
+    </footer>
   </body>
 </html>
