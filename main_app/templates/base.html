@@ -4,7 +4,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <!-- <link rel="stylesheet" href="{% static 'css/style.css' %}" /> -->
+    <link rel="stylesheet" href="{% static 'css/main_app_style/main_app_base.css' %}">
     <link
       rel="icon"
       type="image/png"
@@ -12,8 +13,10 @@
       href="{% static 'images/icon.png' %}"
     />
     <title>Track your business</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script> -->
+<!-- 
     <style type="text/tailwindcss">
       .btn {
         @apply rounded-md px-2 py-1 text-center font-medium shadow-sm ring-1 text-slate-700 ring-slate-700/10 hover:bg-slate-50;
@@ -31,53 +34,39 @@
       .error {
         @apply text-red-500 text-sm;
       }
-    </style>
+    </style> -->
   </head>
-  <body>
-    <header class="navbar">
-      <nav class="basic-nav">
-        <div class="basic-container">
+  <body class="app-container">
+    <header class="main-header">
+      <h3 class="logo">Cover</h3>
+      <nav class="main-nav">
           {% if user.is_authenticated and user.profile.role == "L" %}
-          <ul class="ul-container">
-            <li class="list-container"><a href="{% url 'bank' %}">Home</a></li>
-            <li class="list-container"><a href="{% url 'request' %}">view all requests</a></li>
-            <li class="list-container"><a href="{% url 'create_loan' %}">Create Loan</a></li>
-          </ul>
+            <a href="{% url 'bank' %}" class="nav-item nav-active">Home</a>
+            <a href="{% url 'request' %}" class="nav-item">All Request</a>
+            <a href="{% url 'create_loan' %}" class="nav-item">New Loan</a>
           {% else %}
-          <ul class="ul-container">
-            <li class="list-container"><a href="{% url 'home' %}">Home</a></li>
-            <li class="list-container">
-              <a href="{% url 'contact' %}">Contact us</a>
-            </li>
-          </ul>
+            <a href="{% url 'home' %}" class="nav-item nav-active">Home</a>
+            <a href="{% url 'contact' %}" class="nav-item">Contact Us</a>
           {% endif %}
-        </div>
-        <div class="auth-container">
+          
           {% if user.is_authenticated and user.profile.role == "L" %}
-          <ul class="ul-container">
-            <li>
-            <form action="{% url 'logout' %}" method="post">
+            <form action="{% url 'logout' %}" method="post" class="logout-form">
               {% csrf_token %}
-              <button type="submit">Logout</button>
+              <button class="nav-item logout-btn" type="submit">Logout</button>
             </form>
-            </li>
-          </ul>
           {% else %}
-          <ul class="ul-container">
-            <li class="list-container">
-              <a href="{% url 'signup' %}">sign-up</a>
-            </li>
-            <li class="list-container">
-              <a href="{% url 'login' %}">sign-in</a>
-            </li>
-          </ul>
+            <a href="{% url 'signup' %}" class="nav-item">Sign Up</a>
+            <a href="{% url 'login' %}" class="nav-item">Sign In</a>
           {% endif %}
-        </div>
       </nav>
     </header>
 
-    <main>{% block content %} {% endblock %}</main>
+    <main class="main-content">
+      {% block content %} {% endblock %}
+    </main>
 
-    <footer></footer>
+    <footer class="main-footer">
+      <p class="footer-text">Cover template for <a href="https://getbootstrap.com/" class="footer-link">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="footer-link">@mdo</a>.</p>
+    </footer>
   </body>
 </html>

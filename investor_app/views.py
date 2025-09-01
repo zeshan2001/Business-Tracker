@@ -2,6 +2,7 @@ from django.shortcuts import render
 from main_app.decorators import role_required
 from main_app.mixins import RoleRequiredMixin
 from main_app.models import Business
+from Business_owner_app.views import business_detail
 
 # Create your views here.
 
