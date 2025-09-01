@@ -1,0 +1,24 @@
+{% extends 'base_bank.html' %} {% block content %}
+
+<div>
+  <h1>Profile of the bank manager!</h1>
+
+  profile information
+
+  <div>
+    <h2>user: {{ owner.user }}</h2>
+  </div>
+  <hr />
+  <ul>
+    <li><a href="{% url 'Bank_Profile_Update' %}">Update Password</a></li>
+  </ul>
+</div>
+{% endblock %}
+
+<!-- 
+    user
+    bank 
+    role 
+    email
+    phone
+-->

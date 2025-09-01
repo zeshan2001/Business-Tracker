@@ -1,4 +1,4 @@
-{% extends 'base_investor.html' %} {% block content %}
+{% extends 'base_bank.html' %} {% block content %}
 
 <h1>this should show</h1>
 <div>
@@ -6,7 +6,6 @@
 
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
     <table>
       <label for="id_password">New Password:</label>
       <input type="password" name="password" id="id_password" />

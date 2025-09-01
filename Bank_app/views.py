@@ -106,13 +106,14 @@ class ProfileDetail(View):
         return render(request, 'Bank_Profile.html', {'owner': owner})
 
 class ProfileUpdate(UpdateView):
-    # model = Profile
+    model = Profile
+    fields = []
     # fields = ['email', 'phone']
     template_name = 'Bank_Profile_Update.html'
     success_url = reverse_lazy('Bank_Profile')
     
-    # def get_object(self, queryset=None):
-    #     return get_object_or_404(Profile, user=self.request.user)
+    def get_object(self, queryset=None):
+        return get_object_or_404(Profile, user=self.request.user)
 
     def form_valid(self, form):
         response = super().form_valid(form)

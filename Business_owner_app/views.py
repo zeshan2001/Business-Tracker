@@ -247,7 +247,6 @@ def business_detail(request, business_id):
     }
     return render(request, 'business_detail.html', context)
 
-<<<<<<< HEAD
 
 class ProfileDetail(View):
 
@@ -290,9 +289,7 @@ class ProfileDelete(View):
         owner.delete()      # delete profile
         user.delete()        # delete user
         return redirect('home')  
-=======
-def profile(request):
-    return render(request,'profile.html')
+
 
 
 def dashboard(request):
@@ -354,4 +351,3 @@ def dashboard(request):
 
     }
     return render(request, 'dashboard.html', context)
->>>>>>> 98450cdcabfd207883e156e1c2ffd07ed8e5e411
