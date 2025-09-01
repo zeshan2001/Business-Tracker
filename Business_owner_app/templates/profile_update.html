@@ -1,0 +1,28 @@
+{% extends 'baseBusinessOwner.html' %} {% block content %}
+
+<h1>this should show</h1>
+<div>
+  <h1>Edit Your Profile</h1>
+
+  <!-- <form action="" method="POST">
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+
+    <input type="submit" value="Submit!" class="btn" />
+  </form> -->
+
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <table>
+      <label for="id_password">New Password:</label>
+      <input type="password" name="password" id="id_password" />
+    </table>
+
+    <button type="submit">Submit!</button>
+  </form>
+</div>
+{% endblock %}
