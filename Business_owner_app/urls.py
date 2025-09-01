@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.business, name="business"),
+    path("list", views.business, name="business"),
     path('<int:business_id>/',views.business_detail, name='business_detail'),
     path('income_statement/create/<int:business_id>/',views.income_statement.as_view(), name='income_statement'),
     path('income_statement/update/<int:pk>/',views.income_statement_Update.as_view(), name='income_statement_update'),
@@ -13,9 +13,14 @@ urlpatterns = [
     path('create/',views.business_Create.as_view(),name='business_Create'),
     path('create/<int:pk>/update/',views.business_Update.as_view(),name='business_update'),
     path('<int:pk>/delete/',views.business_Delete.as_view(),name='business_delete'),
+    path("profile", views.profile, name="Profile"),
+    path("", views.dashboard, name="dashboard"),
     path('list-banks/',views.list_Bank,name='list-banks'),
     path('banks/<int:bank_id>/create-request/', views.Create_Request.as_view(), name='create_request'),
+<<<<<<< HEAD
     path("profile/", views.ProfileDetail.as_view(), name="Profile"),
     path("profile/update/", views.ProfileUpdate.as_view(), name="ProfileUpdate"),
     path("profile/delete/", views.ProfileDelete.as_view(), name="ProfileDelete"),
+=======
+>>>>>>> 98450cdcabfd207883e156e1c2ffd07ed8e5e411
 ]

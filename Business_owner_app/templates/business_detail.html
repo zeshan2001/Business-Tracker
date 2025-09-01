@@ -1,11 +1,12 @@
-{% extends "baseBusinessOwner.html" %} {% block content %}
-
+{% extends "baseBusinessOwner.html" %} 
+{% block content %}
+{% load humanize %}
 <div class="container">
   <!-- Business Basic Info -->
   <div class="card">
     <h2>{{ business.brand }}</h2>
     <p><strong>Owner:</strong> {{ business.user.username }}</p>
-    <p><strong>Initial Cost:</strong> ${{ business.init_cost }}</p>
+    <p><strong>Initial Cost:</strong> ${{ business.init_cost|floatformat:2|intcomma }}</p>
   </div>
 
   <!-- Add Financial Statements Buttons -->
@@ -39,37 +40,37 @@
         <tr>
           <td><strong>Current Assets</strong></td>
           {% for sheet in balance_sheets %}
-          <td>${{ sheet.current_assets }}</td>
+          <td>${{ sheet.current_assets|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
         <tr>
           <td><strong>Non-Current Assets</strong></td>
           {% for sheet in balance_sheets %}
-          <td>${{ sheet.non_current_assets }}</td>
+          <td>${{ sheet.non_current_assets|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
         <tr>
           <td><strong>Cash & Equivalents</strong></td>
           {% for sheet in balance_sheets %}
-          <td>${{ sheet.cash_equivalents }}</td>
+          <td>${{ sheet.cash_equivalents|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
         <tr>
           <td><strong>Current Liabilities</strong></td>
           {% for sheet in balance_sheets %}
-          <td>${{ sheet.current_liabilities }}</td>
+          <td>${{ sheet.current_liabilities|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
         <tr>
           <td><strong>Non-Current Liabilities</strong></td>
           {% for sheet in balance_sheets %}
-          <td>${{ sheet.non_current_liabilities }}</td>
+          <td>${{ sheet.non_current_liabilities|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
         <tr>
           <td><strong>Shareholders Equity</strong></td>
           {% for sheet in balance_sheets %}
-          <td>${{ sheet.shareholders_equity }}</td>
+          <td>${{ sheet.shareholders_equity|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
       </tbody>
@@ -90,8 +91,13 @@
           {% for statement in income_statements %}
           <th>
             <a href="{% url 'income_statement_delete' statement.id %}">❌</a>
+<<<<<<< HEAD
             Years : {{ statement.year }}
             <a href="{% url 'income_statement_update' statement.id %}">📝</a>
+=======
+            Year: {{ statement.year }}
+            <a href="{% url 'income_statement_updata' statement.id %}">📝</a>
+>>>>>>> 98450cdcabfd207883e156e1c2ffd07ed8e5e411
           </th>
           {% endfor %}
         </tr>
@@ -100,41 +106,42 @@
         <tr>
           <td><strong>Revenue</strong></td>
           {% for statement in income_statements %}
-          <td>${{ statement.revenue }}</td>
+          <td>${{ statement.revenue|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
-        <tr></tr>
         <tr>
-          <td><strong>non Cash Expense</strong></td>
+          <td><strong>Non Cash Expense</strong></td>
           {% for statement in income_statements %}
-          <td>${{ statement.non_cash_expense }}</td>
+          <td>${{ statement.non_cash_expense|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
         <tr>
           <td><strong>Cost of Goods Sold</strong></td>
           {% for statement in income_statements %}
-          <td>${{ statement.cogs }}</td>
+          <td>${{ statement.cogs|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
         <tr>
           <td><strong>Operating Expenses</strong></td>
           {% for statement in income_statements %}
-          <td>${{ statement.operating_expenses }}</td>
+          <td>${{ statement.operating_expenses|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
         <tr>
           <td><strong>Net Income</strong></td>
           {% for statement in income_statements %}
-          <td>${{ statement.net_income }}</td>
+          {% if statement.net_income < 0 %}
+            <td style="color:red;">(${{ statement.net_income|floatformat:2|intcomma|slice:'1:' }})</td>
+          {% else %}
+            <td>${{ statement.net_income|floatformat:2|intcomma }}</td>
+          {% endif %}
           {% endfor %}
         </tr>
       </tbody>
     </table>
-
   </div>
   {% else %}
   <p>No income statements available.</p>
   {% endif %}
 </div>
-
 {% endblock %}
