@@ -95,7 +95,7 @@ def list_Bank(request):
 
 class Create_Request(CreateView):
     model = Request
-    fields = ['borrow_amount', 'description']  # Only include fields the user should fill
+    fields = ['borrow_amount', 'description',"business"]  # Only include fields the user should fill
     success_url = reverse_lazy('list-banks')
     
     def get_initial(self):
@@ -106,17 +106,20 @@ class Create_Request(CreateView):
             initial['bank'] = get_object_or_404(Bank, id=bank_id)
         return initial
     
+    def get_form(self, form_class =None):
+        form = super().get_form(form_class)
+        qs = Business.objects.filter(user= self.request.user).exclude(request__isnull = False)
+
+        form.fields["business"].queryset = qs
+        if not qs.exists():
+            form.fields["business"].disabled = True
+            form.fields["business"].empty_label = "No businesses with requests"
+        return form
+
     def form_valid(self, form):
-        # Set the business from the current user
-        user_business = get_object_or_404(Business, user=self.request.user)
-        form.instance.business = user_business
-        
-        # Set the bank from URL parameter
         bank_id = self.kwargs.get('bank_id')
-        if bank_id:
-            form.instance.bank = get_object_or_404(Bank, id=bank_id)
-        
-        # Always set status to "P" (Pending)
+        bank = Bank.objects.filter(id= bank_id).first()
+        form.instance.bank = bank
         form.instance.status = "P"
         
         return super().form_valid(form)
@@ -159,15 +162,16 @@ def business_detail(request, business_id):
                     year+= 1
                     cash_flow.append(inc.net_income)
 
-                last_amount = cash_flow[-1]
-            while new_cost <= 0:
-                new_cost += last_amount
-                year += 1
-                cash_flow.append(last_amount)
-            prev_cost = new_cost - last_amount
-            
-            prev_cost = abs(prev_cost)
-            year = round(year + (prev_cost/cash_flow[-1]))
+            last_amount = cash_flow[-1]
+            if last_amount > 0:
+                while new_cost <= 0:
+                    new_cost += last_amount
+                    year += 1
+                    cash_flow.append(last_amount)
+                prev_cost = new_cost - last_amount
+                
+                prev_cost = abs(prev_cost)
+                year = round(year + (prev_cost/cash_flow[-1]))
         return year, cash_flow 
     year, cash_flow = payback_period()
 

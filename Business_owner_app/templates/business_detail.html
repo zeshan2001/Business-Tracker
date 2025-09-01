@@ -1,12 +1,12 @@
 {% extends "baseBusinessOwner.html" %} 
 {% block content %}
-
+{% load humanize %}
 <div class="container">
   <!-- Business Basic Info -->
   <div class="card">
     <h2>{{ business.brand }}</h2>
     <p><strong>Owner:</strong> {{ business.user.username }}</p>
-    <p><strong>Initial Cost:</strong> ${{ business.init_cost }}</p>
+    <p><strong>Initial Cost:</strong> ${{ business.init_cost|floatformat:2|intcomma }}</p>
   </div>
 
   <!-- Add Financial Statements Buttons -->
@@ -40,37 +40,37 @@
         <tr>
           <td><strong>Current Assets</strong></td>
           {% for sheet in balance_sheets %}
-          <td>${{ sheet.current_assets }}</td>
+          <td>${{ sheet.current_assets|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
         <tr>
           <td><strong>Non-Current Assets</strong></td>
           {% for sheet in balance_sheets %}
-          <td>${{ sheet.non_current_assets }}</td>
+          <td>${{ sheet.non_current_assets|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
         <tr>
           <td><strong>Cash & Equivalents</strong></td>
           {% for sheet in balance_sheets %}
-          <td>${{ sheet.cash_equivalents }}</td>
+          <td>${{ sheet.cash_equivalents|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
         <tr>
           <td><strong>Current Liabilities</strong></td>
           {% for sheet in balance_sheets %}
-          <td>${{ sheet.current_liabilities }}</td>
+          <td>${{ sheet.current_liabilities|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
         <tr>
           <td><strong>Non-Current Liabilities</strong></td>
           {% for sheet in balance_sheets %}
-          <td>${{ sheet.non_current_liabilities }}</td>
+          <td>${{ sheet.non_current_liabilities|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
         <tr>
           <td><strong>Shareholders Equity</strong></td>
           {% for sheet in balance_sheets %}
-          <td>${{ sheet.shareholders_equity }}</td>
+          <td>${{ sheet.shareholders_equity|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
       </tbody>
@@ -91,7 +91,7 @@
           {% for statement in income_statements %}
           <th>
             <a href="{% url 'income_statement_delete' statement.id %}">❌</a>
-            Years : {{ statement.year }}
+            Year: {{ statement.year }}
             <a href="{% url 'income_statement_updata' statement.id %}">📝</a>
           </th>
           {% endfor %}
@@ -101,136 +101,42 @@
         <tr>
           <td><strong>Revenue</strong></td>
           {% for statement in income_statements %}
-          <td>${{ statement.revenue }}</td>
+          <td>${{ statement.revenue|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
-        <tr></tr>
         <tr>
-          <td><strong>non Cash Expense</strong></td>
+          <td><strong>Non Cash Expense</strong></td>
           {% for statement in income_statements %}
-          <td>${{ statement.non_cash_expense }}</td>
+          <td>${{ statement.non_cash_expense|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
         <tr>
           <td><strong>Cost of Goods Sold</strong></td>
           {% for statement in income_statements %}
-          <td>${{ statement.cogs }}</td>
+          <td>${{ statement.cogs|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
         <tr>
           <td><strong>Operating Expenses</strong></td>
           {% for statement in income_statements %}
-          <td>${{ statement.operating_expenses }}</td>
+          <td>${{ statement.operating_expenses|floatformat:2|intcomma }}</td>
           {% endfor %}
         </tr>
         <tr>
           <td><strong>Net Income</strong></td>
           {% for statement in income_statements %}
-          <td>${{ statement.net_income }}</td>
+          {% if statement.net_income < 0 %}
+            <td style="color:red;">(${{ statement.net_income|floatformat:2|intcomma|slice:'1:' }})</td>
+          {% else %}
+            <td>${{ statement.net_income|floatformat:2|intcomma }}</td>
+          {% endif %}
           {% endfor %}
         </tr>
       </tbody>
     </table>
-
   </div>
   {% else %}
   <p>No income statements available.</p>
   {% endif %}
 </div>
-<div>
-  <h1 align="center">Dashboard</h1>
-
-  <!-- Pie Chart -->
-  <h2 align="center">Pie Chart</h2>
-  <canvas id="pieChart" width="400" height="200"></canvas>
-
-  <!-- NPV Chart -->
-  <h2 align="center">NPV Chart</h2>
-  <canvas id="npvChart" width="600" height="400"></canvas>
-</div>
-
-<script>
-  // Pie Chart
-  const pieCtx = document.getElementById('pieChart').getContext('2d');
-  new Chart(pieCtx, {
-    type: 'pie',
-    data: {
-      labels: {{ pie_labels|safe }},
-      datasets: [{
-        label: 'Cost Distribution',
-        data: {{ pie_data|safe }},
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.7)',
-          'rgba(54, 162, 235, 0.7)',
-          'rgba(255, 206, 86, 0.7)',
-          'rgba(75, 192, 192, 0.7)'
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)'
-        ],
-        borderWidth: 1
-      }]
-    }
-  });
-
-
-  const ctx = document.getElementById('npvChart').getContext('2d');
-  const discountRates = {{ discount_rates|safe }};   // e.g. [0, 5, 10, 15, 20, 25, 30, 35, 40]
-  const npvValues = {{ npv_values|safe }};           // e.g. [40000, 30000, 20000, 10000, 0, -8000, -12000, -16000, -18000]
-  const irrRate = ({{ irr|safe }} * 100) / 5;                        // e.g. 20.42
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: discountRates,
-      datasets: [{
-          label: 'NPV Curve',
-          data: npvValues.reverse(),
-          borderColor: 'blue',
-          borderWidth: 2,
-          fill: false,
-          tension: 0.2
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: 'top' },
-        annotation: {
-          annotations: {
-            zeroLine: {
-                type: 'line',
-                yMin: 0,
-                yMax: 0,
-                borderColor: 'black',
-                borderWidth: 1
-            },
-            irrLine: {
-              type: 'line',
-              xMin: irrRate,
-              xMax: irrRate,
-              borderColor: 'red',
-              borderDash: [6, 6],
-              borderWidth: 2,
-              label: {
-                enabled: true,
-                content: 'IRR ≈ ' + irrRate.toFixed(2) + '%',
-                position: 'start',
-                backgroundColor: 'rgba(255,255,255,0.7)',
-                color: 'red'
-              }
-            }
-          }
-        }
-      },
-      scales: {
-        x: { title: { display: true, text: 'Discount Rate (%)' } },
-        y: { title: { display: true, text: 'NPV ($)' } }
-      }
-    }
-  });
-</script>
-
 {% endblock %}
