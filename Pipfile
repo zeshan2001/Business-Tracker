@@ -9,6 +9,10 @@ psycopg2-binary = "*"
 numpy-financial = "*"
 python-dateutil = "*"
 pillow = "*"
+python-dotenv = "*"
+whitenoise = "*"
+gunicorn = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
