@@ -1,24 +1,41 @@
-{% extends 'base_bank.html' %} {% block content %}
+{% extends 'base_bank.html' %}
+{% load static %}
 
-<div>
-  <h1>Profile of the bank manager!</h1>
+{% block content %}
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                {{ owner.user.username|slice:":1"|upper }}
+            </div>
+            <h1 class="profile-title">Bank Manager Profile</h1>
+        </div>
 
-  profile information
+        <div class="profile-info">
+            <div class="info-group">
+                <span class="info-label">Username</span>
+                <span class="info-value">{{ owner.user.username }}</span>
+            </div>
 
-  <div>
-    <h2>user: {{ owner.user }}</h2>
-  </div>
-  <hr />
-  <ul>
-    <li><a href="{% url 'Bank_Profile_Update' %}">Update Password</a></li>
-  </ul>
+            {% if owner.user.email %}
+            <div class="info-group">
+                <span class="info-label">Email</span>
+                <span class="info-value">{{ owner.user.email }}</span>
+            </div>
+            {% endif %}
+
+            <div class="info-group">
+                <span class="info-label">Account Status</span>
+                <span class="status-badge active">Active</span>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <a href="{% url 'Bank_Profile_Update' %}" class="update-btn">
+                <i class="fas fa-key"></i>
+                Update Password
+            </a>
+        </div>
+    </div>
 </div>
 {% endblock %}
-
-<!-- 
-    user
-    bank 
-    role 
-    email
-    phone
--->

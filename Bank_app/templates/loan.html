@@ -1,34 +1,45 @@
 {% extends "base_bank.html" %}
+{% load static %}
 
 {% block content %}
-<form method="post">
-  {% csrf_token %}
-  {% if form.fields.business %}
-  {{ form.as_p }}
-  
-  <div id="request-detail-box"></div>
+<div class="loan-container">
+    <div class="loan-card">
+        <h1 class="loan-title">Create New Loan</h1>
+        
+        {% if form.fields.business %}
+            <form method="post" class="loan-form">
+                {% csrf_token %}
+                <div class="form-fields">
+                    {{ form.as_p }}
+                </div>
+                
+                <div id="request-detail-box" class="request-details"></div>
 
-    <button type="submit">Create Loan</button>
-  {% else %}
-    <p>No businesses have made requests yet. Cannot create a loan.</p>
-    <button type="submit" disabled>Create Loan</button>
-  {% endif %}
-</form>
+                <button type="submit" class="submit-btn">Create Loan</button>
+            </form>
+        {% else %}
+            <div class="no-requests">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>No businesses have made requests yet. Cannot create a loan.</p>
+                <button type="submit" class="submit-btn disabled" disabled>Create Loan</button>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
 <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 <script>
-  document.addEventListener("change", function(e) {
-    if (e.target.id === "id_business") {
-      let businessId = e.target.value;
-      if (businessId) {
-        fetch(`/bank/request-detail/${businessId}/`)
-          .then(res => res.text())
-          .then(html => {
-            document.getElementById("request-detail-box").innerHTML = html;
-          });
-      }
-    }
-  });
+    document.addEventListener("change", function(e) {
+        if (e.target.id === "id_business") {
+            let businessId = e.target.value;
+            if (businessId) {
+                fetch(`/bank/request-detail/${businessId}/`)
+                    .then(res => res.text())
+                    .then(html => {
+                        document.getElementById("request-detail-box").innerHTML = html;
+                    });
+            }
+        }
+    });
 </script>
-
 {% endblock %}
-
