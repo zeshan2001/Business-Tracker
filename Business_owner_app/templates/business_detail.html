@@ -1,20 +1,22 @@
-{% extends "baseBusinessOwner.html" %} 
-{% block content %}
-{% load humanize %}
-
+{% extends "baseBusinessOwner.html" %} {% block content %} {% load humanize %}
 
 <div class="business-detail-container">
-
   <!-- Business Basic Info -->
   <div class="business-info-card">
     <div class="business-image-container">
       {% load static %}
-      <img src="{% static business.image|cut:'main_app/static' %}" alt="brand image" />
+      <img
+        src="{% static business.image|cut:'main_app/static' %}"
+        alt="brand image"
+      />
     </div>
     <div>
       <h2>{{ business.brand }}</h2>
       <p><strong>Owner:</strong> {{ business.user.username }}</p>
-      <p><strong>Initial Cost:</strong> ${{ business.init_cost|floatformat:2|intcomma }}</p>
+      <p>
+        <strong>Initial Cost:</strong> ${{
+        business.init_cost|floatformat:2|intcomma }}
+      </p>
       <p>{{ business.description }}</p>
     </div>
   </div>
@@ -34,10 +36,9 @@
   </div>
 
   <div class="financial-tables-container">
-
     <!-- Balance Sheet Table -->
     <div class="table-container">
-    {% if balance_sheets %}
+      {% if balance_sheets %}
       <h3>Balance Sheet</h3>
       <table class="">
         <thead>
@@ -98,7 +99,7 @@
 
     <!-- Income Statement Table -->
     <div class="table-container">
-    {% if income_statements %}
+      {% if income_statements %}
       <h3>Income Statement</h3>
       <table>
         <thead>
@@ -140,13 +141,14 @@
           </tr>
           <tr>
             <td><strong>Net Income</strong></td>
-            {% for statement in income_statements %}
-            {% if statement.net_income < 0 %}
-              <td style="color:red;">(${{ statement.net_income|floatformat:2|intcomma|slice:'1:' }})</td>
+            {% for statement in income_statements %} {% if statement.net_income
+            < 0 %}
+            <td style="color: red">
+              (${{ statement.net_income|floatformat:2|intcomma|slice:'1:' }})
+            </td>
             {% else %}
-              <td>${{ statement.net_income|floatformat:2|intcomma }}</td>
-            {% endif %}
-            {% endfor %}
+            <td>${{ statement.net_income|floatformat:2|intcomma }}</td>
+            {% endif %} {% endfor %}
           </tr>
         </tbody>
       </table>
@@ -154,10 +156,7 @@
       <p>No income statements available.</p>
       {% endif %}
     </div>
-    
-
   </div>
-
 </div>
 
 <div class="pie-npv-charts-container">
@@ -202,9 +201,9 @@
 
 
   const ctx = document.getElementById('npvChart').getContext('2d');
-  const discountRates = {{ discount_rates|safe }};   // e.g. [0, 5, 10, 15, 20, 25, 30, 35, 40]
-  const npvValues = {{ npv_values|safe }};           // e.g. [40000, 30000, 20000, 10000, 0, -8000, -12000, -16000, -18000]
-  const irrRate = ({{ irr|safe }} * 100) / 5;                        // e.g. 20.42
+  const discountRates = {{ discount_rates|safe }};
+  const npvValues = {{ npv_values|safe }};
+  const irrRate = ({{ irr|safe }} * 100) / 5;
   new Chart(ctx, {
     type: 'line',
     data: {

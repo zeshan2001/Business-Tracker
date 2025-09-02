@@ -16,6 +16,4 @@ def role_required(allowed_roles=[]):
 how to use it 
 @role_required(allowed_roles["--<role>--"])
 def name():
-
-
 '''
