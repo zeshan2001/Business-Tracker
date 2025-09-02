@@ -125,11 +125,15 @@ def investment_detail(request, business_id):
 
     irr = irr_rate  # Example IRR
 
+    sum_of_net_income = 0
+
+    for income_statement in income_statements:
+        sum_of_net_income += income_statement.net_income
+
+    check_if_true = sum_of_net_income < 0
+
     # New data for User Businesses chart
     # Example: One user with multiple businesses
-    business_labels = ["Business A", "Business B", "Business C"]
-    revenue_data = [15000, 22000, 18000]
-    cost_data = [9000, 14000, 12000]
     context = {
         'business_id': business_id,
         'owner': owner,
@@ -141,9 +145,7 @@ def investment_detail(request, business_id):
         'discount_rates': discount_rates,
         'npv_values': npv_values,
         'irr': irr,
-        'business_labels': business_labels,
-        'revenue_data': revenue_data,
-        'cost_data': cost_data
+        "is_loss": check_if_true
     }
 
     return render(request, "investment_detail.html", context)

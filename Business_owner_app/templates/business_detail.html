@@ -175,7 +175,11 @@
   <!-- NPV Chart -->
   <div>
     <h2 class="ffscdr" align="center">NPV</h2>
-    <canvas id="npvChart" width="600" height="400"></canvas>
+      {% if is_loss %}
+        <p class="ffscdr">not predictable, out of data</p>
+      {% else %}
+      <canvas id="npvChart" width="600" height="400"></canvas>  
+      {% endif %}      
   </div>
 </div>
 

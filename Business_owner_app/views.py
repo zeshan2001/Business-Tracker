@@ -294,9 +294,15 @@ def business_detail(request, business_id):
     
     irr = irr_rate  # Example IRR
 
-    business_labels = ["Business A", "Business B", "Business C"]
-    revenue_data = [15000, 22000, 18000]
-    cost_data = [9000, 14000, 12000]
+    sum_of_net_income = 0
+
+    for income_statement in income_statements:
+        sum_of_net_income += income_statement.net_income
+
+    check_if_true = sum_of_net_income < 0
+
+    # sum_of_npv_values =  < business.init_cost
+    print( sum_of_net_income)
     context = {
         'business': business,
         'balance_sheets': balance_sheets,
@@ -307,9 +313,7 @@ def business_detail(request, business_id):
         'discount_rates': discount_rates,
         'npv_values': npv_values,
         'irr': irr,
-        'business_labels': business_labels,
-        'revenue_data': revenue_data,
-        'cost_data': cost_data,
+        "is_loss": check_if_true
     }
     return render(request, 'business_detail.html', context)
 
