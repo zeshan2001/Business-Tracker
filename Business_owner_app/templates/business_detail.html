@@ -10,7 +10,7 @@
         alt="brand image"
       />
     </div>
-    <div>
+    <div class="bb-det">
       <h2>{{ business.brand }}</h2>
       <p><strong>Owner:</strong> {{ business.user.username }}</p>
       <p>
@@ -24,12 +24,12 @@
   <div class="balance-income-buttons-container">
     <div class="btn-balance-income">
       <a href="{% url 'income_statement' business.id %}" class="">
-        ➕ Add Income Statement
+        ➕ Income Statement
       </a>
     </div>
     <div class="btn-balance-income">
-      <a href="{% url 'balance_sheet' business.id %}" class="">
-        ➕ Add Balance Sheet
+      <a href="{% url 'balance_sheet' business.id %}" class="bbttnn">
+        ➕ Balance Sheet
       </a>
     </div>
   </div>
@@ -86,7 +86,14 @@
           <tr>
             <td><strong>Shareholders Equity</strong></td>
             {% for sheet in balance_sheets %}
+            <!-- <td>${{ sheet.shareholders_equity|floatformat:2|intcomma }}</td> -->
+            {% if sheet.shareholders_equity < 0 %}
+            <td style="color: red">
+              (${{ sheet.shareholders_equity|floatformat:2|intcomma|slice:'1:' }})
+            </td>
+            {% else %}
             <td>${{ sheet.shareholders_equity|floatformat:2|intcomma }}</td>
+            {% endif %}
             {% endfor %}
           </tr>
         </tbody>
@@ -162,12 +169,12 @@
 <div class="pie-npv-charts-container">
   <!-- Pie Chart -->
   <div>
-    <h2 align="center">Pie Chart</h2>
+    <h2 class="ffscdr" align="center">Cost</h2>
     <canvas id="pieChart" width="400" height="200"></canvas>
   </div>
   <!-- NPV Chart -->
   <div>
-    <h2 align="center">NPV Chart</h2>
+    <h2 class="ffscdr" align="center">NPV</h2>
     <canvas id="npvChart" width="600" height="400"></canvas>
   </div>
 </div>

@@ -10,5 +10,4 @@ urlpatterns = [
     path("request-detail/<int:business_id>/", views.RequstDetail.as_view(), name="request_detail_loan"),
     path("profile/", views.ProfileDetail.as_view(), name="Bank_Profile"),
     path("profile/update/", views.ProfileUpdate.as_view(), name="Bank_Profile_Update"),
-    # path("profile/delete/", views.ProfileDelete.as_view(), name="Bank_Profile_Delete"),
 ]

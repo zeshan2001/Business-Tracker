@@ -9,7 +9,9 @@
       >Balance Sheet {{ object.year }}</span
     >?
     <br />
-    This action cannot be undone.
+    <span style="color: #e53e3e;">
+      This action cannot be undone.
+    </span>
   </div>
   <form method="post" class="balance-delete-form" id="balance-delete-form">
     {% csrf_token %}
@@ -18,6 +20,7 @@
         type="submit"
         class="balance-delete-btn confirm"
         id="balance-delete-confirm"
+        style="background-color: #e53e3e;"
       >
         Delete
       </button>

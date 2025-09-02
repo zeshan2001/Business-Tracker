@@ -55,7 +55,11 @@ class income_statement(RoleRequiredMixin,CreateView):
     allowed_roles= ["B"]
     model = Income_statement
     fields = ['revenue', 'non_cash_expense', 'cogs', 'operating_expenses', 'net_income', 'year']
-    success_url = '/business/'
+
+    def get_success_url(self):
+        obj = self.get_object()
+        return reverse_lazy("business_detail", kwargs={"business_id": obj.business.id})
+
     def get_initial(self):
         initial = super().get_initial()
         # Pre-fill the business field from URL parameter
@@ -70,11 +74,16 @@ class income_statement(RoleRequiredMixin,CreateView):
         if business_id:
             form.instance.business = Business.objects.get(id=business_id)
         return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy("business_detail", kwargs={"business_id": self.object.business.id })
+
+
 class balance_sheet(RoleRequiredMixin ,CreateView):
     allowed_roles= ["B"]
     model = Balance_sheet
     fields = ['current_assets', 'non_current_assets', 'cash_equivalents', 'current_liabilities','non_current_liabilities','shareholders_equity', 'year']
-    success_url = '/business/'
+
     def get_initial(self):
         initial = super().get_initial()
         # Pre-fill the business field from URL parameter
@@ -89,6 +98,9 @@ class balance_sheet(RoleRequiredMixin ,CreateView):
         if business_id:
             form.instance.business = Business.objects.get(id=business_id)
         return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy("business_detail", kwargs={"business_id": self.object.business.id })
     
     
 
@@ -96,7 +108,10 @@ class balance_sheet_Update(RoleRequiredMixin,UpdateView):
     allowed_roles= ["B"]
     model = Balance_sheet
     fields = ['current_assets', 'non_current_assets', 'cash_equivalents', 'current_liabilities','non_current_liabilities','shareholders_equity', 'year']
-    success_url = '/business/'
+
+    def get_success_url(self):
+        obj = self.get_object()
+        return reverse_lazy("business_detail", kwargs={"business_id": obj.business.id})
 
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()
@@ -111,7 +126,11 @@ class balance_sheet_Update(RoleRequiredMixin,UpdateView):
 class balance_sheet_Delete(RoleRequiredMixin,DeleteView):
     allowed_roles= ["B"]
     model = Balance_sheet
-    success_url = '/business/'
+
+    def get_success_url(self):
+        obj = self.get_object()
+        return reverse_lazy("business_detail", kwargs={"business_id": obj.business.id})
+    
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()
 
@@ -123,22 +142,31 @@ class balance_sheet_Delete(RoleRequiredMixin,DeleteView):
 
 
 class income_statement_Update(RoleRequiredMixin ,UpdateView):
+    allowed_roles=["B"]
     model = Income_statement
     fields = ['revenue', 'non_cash_expense', 'cogs', 'operating_expenses', 'net_income', 'year']
-    success_url = '/business/'
+
+    def get_success_url(self):
+        obj = self.get_object()
+        return reverse_lazy("business_detail", kwargs={"business_id": obj.business.id})
 
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()
 
         related_business = obj.business
+
         if related_business.user == request.user:
             return super().dispatch(request, *args, **kwargs)
         else:
             return redirect("home")
 
 class income_statement_Delete(RoleRequiredMixin ,DeleteView):
+    allowed_roles=["B"]
     model = Income_statement
-    success_url = '/business/'
+
+    def get_success_url(self):
+        obj = self.get_object()
+        return reverse_lazy("business_detail", kwargs={"business_id": obj.business.id})
 
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()

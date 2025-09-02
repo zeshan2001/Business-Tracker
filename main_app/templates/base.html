@@ -18,7 +18,7 @@
   </head>
   <body class="app-container">
     <header class="main-header">
-      <h3 class="logo">Cover</h3>
+      <h3 class="logo">Business Tracker</h3>
       <nav class="main-nav">
         {% if user.is_authenticated and user.profile.role == "L" %}
         <a href="{% url 'bank' %}" class="nav-item nav-active">Home</a>
@@ -42,11 +42,9 @@
     <main class="main-content">{% block content %} {% endblock %}</main>
 
     <footer class="main-footer">
-      <p class="footer-text">
-        Cover template for
-        <a href="https://getbootstrap.com/" class="footer-link">Bootstrap</a>,
-        by <a href="https://twitter.com/mdo" class="footer-link">@mdo</a>.
-      </p>
-    </footer>
+  <p class="footer-text">
+    © 2025 Business Tracker. All rights reserved.
+  </p>
+</footer>
   </body>
 </html>
