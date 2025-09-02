@@ -2,22 +2,6 @@
 {% load humanize %}
 <div class="request-detail-container">
 {% block content %}
-  <!-- <div class="request_detail">
-    <h1>Company name: {{ request.business.brand }}</h1>
-    <h3>Owner name: {{ request.business.user.username }}</h3>
-    <h3>Borrow amount: {{ request.borrow_amount }}</h3>
-    <p>Description: {{ request.description }}</p>
-    {% if request.status == "P" %}
-    <h3>Status request: <span class="pending">
-    Pending</span></h3>
-    {% elif request.status == "A" %}
-    <h3>Status request: <span class="accepted">
-    Accepted</span></h3>
-    {% else %}
-    <h3>Status request: <span class="rejected">
-    Rejected</span></h3>
-    {% endif %}
-  </div> -->
 
 
   <div class="request-info">
@@ -185,16 +169,5 @@
 
 
 
-  <!-- <div>
-    {% if DSCR > 1 %}
-    <h1 class="safe">DSCR: {{ DSCR }} safe to loan</h1>
-    {% else %}
-    <h1 class="risky">DSCR: {{ DSCR }} risky to loan</h1>
-    {% endif %}
-  </div> -->
-
-  <!-- <div>
-    <a href="{% url 'request_update' request.id %}">Next</a>
-  </div> -->
 </div>
 {% endblock %}
