@@ -18,5 +18,4 @@ urlpatterns = [
     path('banks/<int:bank_id>/create-request/', views.Create_Request.as_view(), name='create_request'),
     path("profile/", views.ProfileDetail.as_view(), name="Profile"),
     path("profile/update/", views.ProfileUpdate.as_view(), name="ProfileUpdate"),
-    path("profile/delete/", views.ProfileDelete.as_view(), name="ProfileDelete"),
 ]

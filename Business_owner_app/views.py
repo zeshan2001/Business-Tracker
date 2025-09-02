@@ -7,10 +7,13 @@ from django.contrib.auth import update_session_auth_hash
 from django.views import View
 from main_app.forms import ProfileForm
 from django.contrib.auth.models import User
+from main_app.decorators import role_required
+from main_app.mixins import RoleRequiredMixin
 
 # Create your views here.
 
-class business_Create(CreateView):
+class business_Create(RoleRequiredMixin ,CreateView):
+    allowed_roles= ["B"]
     model=Business
     fields=['brand','init_cost', 'image', 'description']
     success_url='/business/'
@@ -19,20 +22,37 @@ class business_Create(CreateView):
         return super().form_valid(form)
 
 
-class business_Update(UpdateView):
+class business_Update(RoleRequiredMixin,UpdateView):
+    allowed_roles= ["B"]
     model=Business
     fields=['brand','init_cost', 'image', 'description']
     success_url='/business/'
     def form_valid(self, form):
         form.instance.user=self.request.user
         return super().form_valid(form)
+    
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            return redirect("home")
 
 
-class business_Delete(DeleteView):
+class business_Delete(RoleRequiredMixin,DeleteView):
+    allowed_roles= ["B"]
     model=Business
     success_url='/business/'
 
-class income_statement(CreateView):
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            return redirect("home")
+
+class income_statement(RoleRequiredMixin,CreateView):
+    allowed_roles= ["B"]
     model = Income_statement
     fields = ['revenue', 'non_cash_expense', 'cogs', 'operating_expenses', 'net_income', 'year']
     success_url = '/business/'
@@ -50,8 +70,8 @@ class income_statement(CreateView):
         if business_id:
             form.instance.business = Business.objects.get(id=business_id)
         return super().form_valid(form)
-    
-class balance_sheet(CreateView):
+class balance_sheet(RoleRequiredMixin ,CreateView):
+    allowed_roles= ["B"]
     model = Balance_sheet
     fields = ['current_assets', 'non_current_assets', 'cash_equivalents', 'current_liabilities','non_current_liabilities','shareholders_equity', 'year']
     success_url = '/business/'
@@ -72,33 +92,71 @@ class balance_sheet(CreateView):
     
     
 
-class balance_sheet_Update(UpdateView):
+class balance_sheet_Update(RoleRequiredMixin,UpdateView):
+    allowed_roles= ["B"]
     model = Balance_sheet
     fields = ['current_assets', 'non_current_assets', 'cash_equivalents', 'current_liabilities','non_current_liabilities','shareholders_equity', 'year']
     success_url = '/business/'
 
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
 
-class balance_sheet_Delete(DeleteView):
+        related_business = obj.business
+        if related_business.user == request.user:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            return redirect("home")
+
+
+class balance_sheet_Delete(RoleRequiredMixin,DeleteView):
+    allowed_roles= ["B"]
     model = Balance_sheet
     success_url = '/business/'
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+
+        related_business = obj.business
+        if related_business.user == request.user:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            return redirect("home")
 
 
-class income_statement_Update(UpdateView):
+class income_statement_Update(RoleRequiredMixin ,UpdateView):
     model = Income_statement
     fields = ['revenue', 'non_cash_expense', 'cogs', 'operating_expenses', 'net_income', 'year']
     success_url = '/business/'
 
-class income_statement_Delete(DeleteView):
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+
+        related_business = obj.business
+        if related_business.user == request.user:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            return redirect("home")
+
+class income_statement_Delete(RoleRequiredMixin ,DeleteView):
     model = Income_statement
     success_url = '/business/'
 
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
 
+        related_business = obj.business
+        if related_business.user == request.user:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            return redirect("home")
+
+@role_required(allowed_roles=["B"])
 def list_Bank(request):
     listOfbanks=Bank.objects.all()
     return render(request,'list-banks.html',{'listOfbanks':listOfbanks})
 
 
-class Create_Request(CreateView):
+class Create_Request(RoleRequiredMixin,CreateView):
+    allowed_roles= ["B"]
     model = Request
     fields = ['borrow_amount', 'description',"business"]  # Only include fields the user should fill
     success_url = reverse_lazy('list-banks')
@@ -129,15 +187,14 @@ class Create_Request(CreateView):
         
         return super().form_valid(form)
 
-
-
+@role_required(allowed_roles=["B"])
 def business(request):
     businesses=Business.objects.filter(user = request.user)
     return render(request, 'business.html',{'businesses':businesses})
 
 
 
-
+@role_required(allowed_roles=["B"])
 def business_detail(request, business_id):
     business = get_object_or_404(Business, id=business_id)
     
@@ -247,13 +304,14 @@ def business_detail(request, business_id):
     return render(request, 'business_detail.html', context)
 
 
-class ProfileDetail(View):
-
+class ProfileDetail(RoleRequiredMixin,View):
+    allowed_roles= ["B"]
     def get(self, request):
         owner = Profile.objects.get(user=request.user)
         return render(request, 'profile.html', {'owner': owner})
 
-class ProfileUpdate(UpdateView):
+class ProfileUpdate(RoleRequiredMixin,UpdateView):
+    allowed_roles=["B"]
     model = Profile
     fields = ['email', 'phone']
     template_name = 'profile_update.html'
@@ -275,22 +333,13 @@ class ProfileUpdate(UpdateView):
             update_session_auth_hash(self.request, user)
 
         return response
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
 
 
-class ProfileDelete(View):
-    def get(self, request):
-        owner = get_object_or_404(Profile, user=request.user)
-        return render(request, 'profile_confirm_delete.html', {'owner': owner})
-
-    def post(self, request):
-        owner = get_object_or_404(Profile, user=request.user)
-        user = owner.user   # grab linked auth.User
-        owner.delete()      # delete profile
-        user.delete()        # delete user
-        return redirect('home')  
-
-
-
+@role_required(allowed_roles=["B"])
 def dashboard(request):
     user_income_statements = Income_statement.objects.select_related('business').filter(business__user=request.user)
 
