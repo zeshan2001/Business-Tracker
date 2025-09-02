@@ -5,8 +5,7 @@
   <h1>Edit Your Profile</h1>
 
   <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+    {% csrf_token %} {{ form.as_p }}
     <table>
       <label for="id_password">New Password:</label>
       <input type="password" name="password" id="id_password" />

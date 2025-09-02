@@ -5,10 +5,7 @@ from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth import update_session_auth_hash
 from django.views import View
-
-from main_app.mixins import RoleRequiredMixin
-from main_app.forms import ProfileForm
-from django.contrib.auth.models import User
+import numpy_financial as npf
 
 # Create your views here.
 
@@ -16,12 +13,6 @@ from django.contrib.auth.models import User
 def investor_dashborad(request):
     businesses = Business.objects.all()
     return render(request, "investor_dasborad.html", { 'businesses' : businesses })
-
-# @role_required(allowed_roles=["I"])
-# def investor_detail(request,user_id):
-#     request.user = user_id
-#     return render(request, "investor_profile.html")
-
 
 class ProfileDetail(View):
 
@@ -69,5 +60,87 @@ class ProfileDelete(View):
 def investment_detail(request, business_id):
     business_id = Business.objects.get(id=business_id)
     owner = getattr(business_id.user, "profile", None)
+    balance_sheets = business_id.balance_sheets.all().order_by('-year')
+    income_statements = business_id.income_statements.all().order_by('-year')
+    tvc = 0
+    tfc = 0
+    for inc in income_statements:
+        tvc += inc.cogs
+        tfc += inc.operating_expenses
 
-    return render(request, "investment_detail.html", { 'business_id' : business_id, 'owner': owner })
+    tc = tvc + tfc
+    
+    def payback_period():
+        new_cost = business_id.init_cost * -1
+        year = -1
+        cash_flow = []
+
+        reversed_statements_income = business_id.income_statements.all().order_by('year')
+        if (income_statements):
+            last_amount = reversed_statements_income.last().net_income
+            for inc in reversed_statements_income:
+                if new_cost <= 0:
+                    new_cost += inc.net_income 
+                    year+= 1
+                    cash_flow.append(inc.net_income)
+
+            last_amount = cash_flow[-1]
+            if last_amount > 0:
+                while new_cost <= 0:
+                    new_cost += last_amount
+                    year += 1
+                    cash_flow.append(last_amount)
+                prev_cost = new_cost - last_amount
+                
+                prev_cost = abs(prev_cost)
+                year = round(year + (prev_cost/cash_flow[-1]))
+        return year, cash_flow 
+    year, cash_flow = payback_period()
+
+    def npv(rate):
+        discount_rate = rate
+        sum_of_cash = 0
+        for num in range(0, len(cash_flow)):
+            sum_of_cash += float(cash_flow[num]) / float((1+discount_rate)**(num+1))
+        npv_value = sum_of_cash - float(business_id.init_cost)
+        return npv_value
+
+    def irr():
+        cash_flow_with_init = [-float(business_id.init_cost)] + [float(cf) for cf in cash_flow]
+        irr = npf.irr(cash_flow_with_init)
+        return irr
+
+    irr_rate = irr()
+
+    pie_labels = ["TVC", "TFC", "TC"]
+    pie_data = [float(tvc), float(tfc), float(tc)]
+    
+    discount_rates = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+    npv_values =  []
+    for i in range(50, -5, -5):
+        npv_values.append(npv(i/100))
+
+    irr = irr_rate  # Example IRR
+
+    # New data for User Businesses chart
+    # Example: One user with multiple businesses
+    business_labels = ["Business A", "Business B", "Business C"]
+    revenue_data = [15000, 22000, 18000]
+    cost_data = [9000, 14000, 12000]
+    context = {
+        'business_id': business_id,
+        'owner': owner,
+        'balance_sheets': balance_sheets,
+        'income_statements': income_statements,
+        "year": year,
+        "pie_labels": pie_labels,
+        "pie_data": pie_data,
+        'discount_rates': discount_rates,
+        'npv_values': npv_values,
+        'irr': irr,
+        'business_labels': business_labels,
+        'revenue_data': revenue_data,
+        'cost_data': cost_data
+    }
+
+    return render(request, "investment_detail.html", context)

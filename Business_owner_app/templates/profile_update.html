@@ -1,28 +1,50 @@
 {% extends 'baseBusinessOwner.html' %} {% block content %}
 
-<h1>this should show</h1>
-<div>
-  <h1>Edit Your Profile</h1>
+<div class="profile-update-wrapper">
+    <div class="profile-update-header">
+        <h1 class="profile-update-title">Edit Your Profile</h1>
+        <p class="profile-update-subtitle">Update your account information below</p>
+    </div>
 
-  <!-- <form action="" method="POST">
-    {% csrf_token %}
-    <table>
-      {{ form.as_table }}
-    </table>
+    <form method="post" class="profile-update-form">
+        {% csrf_token %}
+        
+        <div class="profile-form-grid">
+            {% for field in form %}
+                <div class="profile-field-group">
+                    <label for="{{ field.id_for_label }}" class="profile-field-label">
+                        {{ field.label }}
+                        {% if field.field.required %}
+                            <span class="profile-required-mark">*</span>
+                        {% endif %}
+                    </label>
+                    <div class="profile-input-wrapper">
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small class="profile-help-text">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="profile-error-message">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
 
-    <input type="submit" value="Submit!" class="btn" />
-  </form> -->
+            <div class="profile-field-group">
+                <label for="id_password" class="profile-field-label">New Password</label>
+                <div class="profile-input-wrapper">
+                    <input type="password" name="password" id="id_password" class="profile-password-input" />
+                    <small class="profile-help-text">Leave blank to keep current password</small>
+                </div>
+            </div>
+        </div>
 
-
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <table>
-      <label for="id_password">New Password:</label>
-      <input type="password" name="password" id="id_password" />
-    </table>
-
-    <button type="submit">Submit!</button>
-  </form>
+        <div class="profile-form-actions">
+            <button type="submit" class="profile-submit-btn">Update Profile</button>
+            <a href="javascript:history.back()" class="profile-cancel-btn">Cancel</a>
+        </div>
+    </form>
 </div>
 {% endblock %}
