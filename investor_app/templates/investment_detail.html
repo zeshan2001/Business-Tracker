@@ -18,6 +18,99 @@
     </div>
   </div>
 
+  <div class="dashboard-container">
+    <!-- User Businesses Bar Chart -->
+    <div>
+      <h2 align="center">User Businesses Revenue vs Cost</h2>
+      <canvas id="userBusinessChart" width="600" height="300"></canvas>
+    </div>
+
+    <!-- User Businesses Bar Chart -->
+    <div>
+      <h2 align="center">Total Revenues and Cost Line Chart</h2>
+      <canvas id="revenueCostChart" width="600" height="300"></canvas>
+    </div>
+
+    <script>
+
+      // User Businesses Chart
+        const userBusinessCtx = document.getElementById('userBusinessChart').getContext('2d');
+        new Chart(userBusinessCtx, {
+            type: 'bar',
+            data: {
+                labels: {{ business_labels|safe }},  // Business names
+                datasets: [
+                    {
+                        label: 'Revenue',
+                        data: {{ revenue_data|safe }},
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Cost',
+                        data: {{ cost_data|safe }},
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: 'Revenue vs Cost per Business' }
+                },
+                scales: {
+                    y: { beginAtZero: true },
+                    x: { stacked: false }
+                }
+            }
+        });
+
+        // Line Chart for Revenue vs Cost Over Years
+        const ctxRevCost = document.getElementById('revenueCostChart').getContext('2d');
+        new Chart(ctxRevCost, {
+            type: 'line',
+            data: {
+                labels: {{ years|safe }},
+                datasets: [
+                    {
+                        label: 'Total Revenue',
+                        data: {{ revenue|safe }},
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        tension: 0.3,
+                        fill: true
+                    },
+                    {
+                        label: 'Total Cost',
+                        data: {{ cost|safe }},
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        tension: 0.3,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: {
+                        display: true,
+                        text: 'Revenue vs Cost Over Years'
+                    }
+                },
+                scales: {
+                    x: { title: { display: true, text: 'Year' } },
+                    y: { title: { display: true, text: 'Amount ($)' }, beginAtZero: true }
+                }
+            }
+        });
+    </script>
+  </div>
   need this info
   <ul>
     <!-- <li>image</li> -->
