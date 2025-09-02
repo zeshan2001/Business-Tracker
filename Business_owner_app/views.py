@@ -224,6 +224,7 @@ def business(request):
 
 def loan_business(request):
     loan_business = Loan.objects.filter(business__user = request.user)
+    print(f"loan_business:::::::: {loan_business}")
     return render(request, "loan_view.html", {"loans": loan_business})
 
 @role_required(allowed_roles=["B"])

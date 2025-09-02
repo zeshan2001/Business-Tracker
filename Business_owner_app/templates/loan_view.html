@@ -1,19 +1,49 @@
-{% extends 'baseBusinessOwner.html' %} 
-
+{% extends 'baseBusinessOwner.html' %}
 {% block content %}
-
-<div>
-  {% if loans %}
-  {% for loan in loans %}
-  <h1>{{ loan.bank.name }}</h1>
-  <h2>{{ loan.loan_amount }}</h2>
-  <h3>{{ loan.interest_rate }}</h3>
-  <h2>{{ loan.start_date }}</h2>
-  <h3>{{ loan.end_date }}</h3>
-  {% endfor %}
-  {% else %}
-  <p class="bbnnmm">You have no loan yet</p>
-  {% endif %}
+<div class="loans-container">
+    <div class="loans-header">
+        <h1 class="loans-title">Your Loans</h1>
+        <p class="loans-subtitle">Manage and track your active loans</p>
+    </div>
+    {% if loans %}
+    <div class="loans-grid">
+        {% for loan in loans %}
+        <div class="loan-card">
+            <div class="loan-header">
+                <h2 class="bank-name">{{ loan.bank.name }}</h2>
+                <span class="loan-status">Active</span>
+            </div>
+            
+            <div class="loan-details">
+                <div class="detail-group">
+                    <span class="detail-label">Loan Amount</span>
+                    <span class="detail-value">${{ loan.loan_amount|floatformat:2 }}</span>
+                </div>
+                
+                <div class="detail-group">
+                    <span class="detail-label">Interest Rate</span>
+                    <span class="detail-value">{{ loan.interest_rate }}%</span>
+                </div>
+                
+                <div class="detail-group">
+                    <span class="detail-label">Start Date</span>
+                    <span class="detail-value">{{ loan.start_date|date:"M d, Y" }}</span>
+                </div>
+                
+                <div class="detail-group">
+                    <span class="detail-label">End Date</span>
+                    <span class="detail-value">{{ loan.end_date|date:"M d, Y" }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-loans">
+        <i class="fas fa-file-invoice-dollar"></i>
+        <p>You have no active loans at the moment</p>
+        <a href="{% url 'list-banks' %}" class="apply-btn">Apply for a Loan</a>
+    </div>
+    {% endif %}
 </div>
-
 {% endblock %}
