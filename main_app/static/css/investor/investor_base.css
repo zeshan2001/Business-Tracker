@@ -1,11 +1,11 @@
-.app-container {
+/* .app-container {
   margin: 0;
   padding: 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: #f8f9fa;
-}
+} */
 
 /* Header Styles */
 .main-header {
@@ -198,7 +198,7 @@
 /* investment detail page  */
 .pie-npv-charts-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 
@@ -228,6 +228,13 @@
     position: relative;
     border-radius: 8px;
     overflow: hidden;
+    width: 220px;
+    height: 220px;
+}
+.ffscdr {
+  border-bottom: 2px solid lightgray;
+  color: gray;
+  font-size: x-large;
 }
 
 .business-image img {
