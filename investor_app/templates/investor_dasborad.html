@@ -1,24 +1,32 @@
-{% extends 'base_investor.html' %} {% block content %}
+{% extends 'base_investor.html' %}
+{% load static %}
 
-<div>
-  dashboard
+{% block content %}
+<div class="dashboard-container">
+    <header class="dashboard-header">
+        <h1 class="dashboard-title">Investment Opportunities</h1>
+        <p class="dashboard-subtitle">Discover promising projects to invest in</p>
+    </header>
 
-  <h1>List of projects to invest in</h1>
-
-  <div>
-    {% load static %} {% for business in businesses %}
-    <a href="{% url 'investment_detail' business.id %}">
-      <div style="background-color: aqua">
-        <img
-          src="{% static business.image|cut:'main_app/static' %}"
-          alt="lol"
-        />
-        <h1>{{ business.brand }}</h1>
-        <p>{{ business.description }}</p>
-      </div>
-    </a>
-    {% endfor %}
-  </div>
+    <div class="projects-grid">
+        {% for business in businesses %}
+        <a href="{% url 'investment_detail' business.id %}" class="project-card">
+            <div class="project-image">
+                <img src="{% static business.image|cut:'main_app/static' %}" 
+                     alt="{{ business.brand }}"
+                     loading="lazy"/>
+            </div>
+            <div class="project-content">
+                <h2 class="project-title">{{ business.brand }}</h2>
+                <p class="project-description">{{ business.description }}</p>
+            </div>
+        </a>
+        {% empty %}
+        <div class="no-projects">
+            <i class="fas fa-search"></i>
+            <p>No investment opportunities available at the moment</p>
+        </div>
+        {% endfor %}
+    </div>
 </div>
-
 {% endblock %}

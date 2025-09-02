@@ -1,23 +1,30 @@
 {% extends 'base_investor.html' %} {% block content %}
 
-<div>
-  <h1>invesment Project details!</h1>
-
-  <div>
-    {% load static %}
-    <div style="background-color: aqua">
-      <img
-        src="{% static business_id.image|cut:'main_app/static' %}"
-        alt="lol"
-      />
-      <h1>{{ business_id.brand }}</h1>
-      <p>{{ business_id.description }}</p>
-      <h4>Contact Info:</h4>
-      <h5>{{ owner.email }}</h5>
-      <h5>{{ owner.phone }}</h5>
-    </div>
+<div class="business-profile">
+      <div class="business-header">
+          <div class="business-image">
+            {% load static %}
+              <img src="{% static business_id.image|cut:'main_app/static' %}" alt="{{ business_id.brand }}"/>
+          </div>
+          <div class="business-info">
+              <h1 class="business-title">{{ business_id.brand }}</h1>
+              <p class="business-description">{{ business_id.description }}</p>
+              <div class="contact-info">
+                  <h3 class="contact-title">Contact Information</h3>
+                  <div class="contact-details">
+                      <div class="contact-item">
+                          <i class="fas fa-envelope"></i>
+                          <span>{{ owner.email }}</span>
+                      </div>
+                      <div class="contact-item">
+                          <i class="fas fa-phone"></i>
+                          <span>{{ owner.phone }}</span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
-</div>
 
 <div class="pie-npv-charts-container">
   <!-- Pie Chart -->

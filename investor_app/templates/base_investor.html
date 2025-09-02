@@ -4,6 +4,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/investor/investor_base.css' %}"
+    />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0"></script>
     <style>
@@ -14,17 +18,26 @@
     </style>
   </head>
   <body>
-    <h1>base works</h1>
-    <ul>
-      <li><a href="{% url 'home' %}">home</a></li>
-      <li><a href="{% url 'contact' %}">contact us</a></li>
-      <li><a href="{% url 'Investor_Profile' %}">Profile</a></li>
-    </ul>
-    <form action="{% url 'logout' %}" method="post">
-      {% csrf_token %}
-      <button type="submit">Logout</button>
-    </form>
-
-    {% block content %} {% endblock %}
+    <header class="main-header">
+      <h3 class="logo">Business Tracker</h3>
+      <nav class="main-nav">
+        <a href="{% url 'investor_dashborad' %}" class="nav-item nav-active">Home</a>
+        <a href="{% url 'Investor_Profile' %}" class="nav-item">Profile</a>
+        <form action="{% url 'logout' %}" method="post" class="logout-form">
+          {% csrf_token %}
+          <button class="nav-item logout-btn" type="submit">Logout</button>
+        </form>
+      </nav>
+    </header>
+    <main>
+      {% block content %} {% endblock %}
+    </main>
+    <footer class="main-footer">
+      <p class="footer-text">
+        Cover template for
+        <a href="https://getbootstrap.com/" class="footer-link">Bootstrap</a>,
+        by <a href="https://twitter.com/mdo" class="footer-link">@mdo</a>.
+      </p>
+    </footer>
   </body>
 </html>
