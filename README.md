@@ -35,7 +35,6 @@ It is a comprehensive digital platform designed for new entrepreneurs. It addres
 
 ---
 
-
 ## 🚀 Getting Started
 
 ## 🔗 Live Site:
@@ -43,7 +42,6 @@ It is a comprehensive digital platform designed for new entrepreneurs. It addres
 👉 [Deployed Project Link]()
 
 ---
-
 
 ## 🧩 Project Board:
 
@@ -68,9 +66,6 @@ It is a comprehensive digital platform designed for new entrepreneurs. It addres
 ![ERD](./images/ERD.png)
 
 ## RESTful Tables
-
-
-
 
 ![TableInvestor]()
 ![TableBank]()
@@ -98,7 +93,6 @@ It is a comprehensive digital platform designed for new entrepreneurs. It addres
 | Trello            | Task & Project Management |
 | Django            | Frontend & Backend        |
 | Postgre           | Database                  |
-| JWT               | User authentication       |
 | CSS               | Styling                   |
 
 ---
