@@ -11,6 +11,8 @@
   <h2>{{ loan.start_date }}</h2>
   <h3>{{ loan.end_date }}</h3>
   {% endfor %}
+  {% else %}
+  <p>You have no loan yet</p>
   {% endif %}
 </div>
 

@@ -57,7 +57,7 @@ class ProfileDelete(RoleRequiredMixin ,View):
         user = owner.user   # grab linked auth.User
         owner.delete()      # delete profile
         user.delete()        # delete user
-        return redirect('home')  
+        return redirect('home')
 
 @role_required(allowed_roles=["I"])
 def investment_detail(request, business_id):
