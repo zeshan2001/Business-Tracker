@@ -171,6 +171,7 @@ def investment_detail(request, business_id):
         'revenue_data': revenue_data,
         'cost_data': cost_data
     }
+    print(f"context ::::: {context['pie_labels']}")
 
 
     return render(request, "investment_detail.html", context)
