@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404, redirect
 from main_app.models import Request, Business, Loan, Balance_sheet, Income_statement, Profile, Bank
 from main_app.decorators import role_required
 from main_app.mixins import RoleRequiredMixin
-from django.views.generic.edit import UpdateView, CreateView, DeleteView
+from django.views.generic.edit import UpdateView, CreateView
 from django.views.generic import View
 from datetime import date
 from dateutil.relativedelta import relativedelta
@@ -122,7 +122,7 @@ class ProfileUpdate(RoleRequiredMixin,UpdateView):
     allowed_roles = ["L"]
     model = Profile
     fields = []
-    # fields = ['email', 'phone']
+
     template_name = 'Bank_Profile_Update.html'
     success_url = reverse_lazy('Bank_Profile')
     
