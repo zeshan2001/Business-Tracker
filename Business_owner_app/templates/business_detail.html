@@ -86,7 +86,14 @@
           <tr>
             <td><strong>Shareholders Equity</strong></td>
             {% for sheet in balance_sheets %}
+            <!-- <td>${{ sheet.shareholders_equity|floatformat:2|intcomma }}</td> -->
+            {% if sheet.shareholders_equity < 0 %}
+            <td style="color: red">
+              (${{ sheet.shareholders_equity|floatformat:2|intcomma|slice:'1:' }})
+            </td>
+            {% else %}
             <td>${{ sheet.shareholders_equity|floatformat:2|intcomma }}</td>
+            {% endif %}
             {% endfor %}
           </tr>
         </tbody>

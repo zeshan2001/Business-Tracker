@@ -1,5 +1,7 @@
 {% extends "baseBusinessOwner.html" %} {% block content %}
 
+{% load humanize %}
+
 <div class="business-container">
   <!-- Header Section -->
   <div class="business-header">
@@ -44,7 +46,7 @@
         <div class="card-info">
           <div class="info-item">
             <p class="info-text">
-              Initial Cost: ${{ business_card.init_cost }}
+              Initial Cost: ${{ business_card.init_cost|floatformat:2|intcomma }}
             </p>
           </div>
         </div>
