@@ -1,17 +1,35 @@
-{% extends 'baseBusinessOwner.html' %} {% block content %}
-<h1>Delete Business</h1>
+{% extends 'baseBusinessOwner.html' %} 
+{% block content %}
+<div class="delete-confirm-detail-co">
 
-<h4>
-  Are you sure you want to delete
-  <span class="teal-text">{{ object.brand }}</span>
-</h4>
+  <div class="delete-confirmation-wrapper">
+    <div class="delete-confirmation-content">
+        <div class="delete-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          
+          <div class="delete-message">
+            <h2 class="delete-title">Confirm Deletion</h2>
+            <p class="delete-text">
+              Are you sure you want to delete <span class="business-name">{{ object.brand }}</span>?
+              <br>
+              <span class="warning-text">This action cannot be undone.</span>
+            </p>
+        </div>
 
-<form action="" method="post">
-  {% csrf_token %}
+        <form action="" method="post" class="delete-form">
+            {% csrf_token %}
+            <div class="delete-actions">
+                <button type="submit" class="delete-confirm-btn">
+                  Yes, Delete Business
+                </button>
+                <a href="{% url 'business' %}" class="delete-cancel-btn">
+                  No, Keep Business
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
 
-  <input type="submit" value="Yes - Delete!" class="btn" />
-
-  <a href="{% url 'business' %}">Cancel</a>
-</form>
-
-{% endblock %}
+        {% endblock %}

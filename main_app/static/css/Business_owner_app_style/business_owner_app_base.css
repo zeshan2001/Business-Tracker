@@ -1286,3 +1286,300 @@
         text-align: center;
     }
 }
+
+
+
+
+
+/* Profile Update page  */
+.profile-update-wrapper {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.profile-update-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.profile-update-title {
+    color: #1a202c;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.profile-update-subtitle {
+    color: #718096;
+    font-size: 1rem;
+}
+
+.profile-update-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.profile-form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.profile-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.profile-field-label {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.profile-required-mark {
+    color: #e53e3e;
+}
+
+.profile-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.profile-input-wrapper input,
+.profile-input-wrapper select,
+.profile-password-input {
+    padding: 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.profile-input-wrapper input:focus,
+.profile-input-wrapper select:focus,
+.profile-password-input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+.profile-help-text {
+    font-size: 0.8rem;
+    color: #718096;
+}
+
+.profile-error-message {
+    color: #e53e3e;
+    font-size: 0.85rem;
+    padding: 0.25rem 0;
+}
+
+.profile-form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.profile-submit-btn,
+.profile-cancel-btn {
+    padding: 0.75rem 1.75rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.profile-submit-btn {
+    background: #4299e1;
+    color: white;
+}
+
+.profile-submit-btn:hover {
+    background: #3182ce;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-cancel-btn {
+    background: #f1f5f9;
+    color: #475569;
+    text-decoration: none;
+}
+
+.profile-cancel-btn:hover {
+    background: #e2e8f0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-update-wrapper {
+        margin: 1rem;
+        padding: 1.5rem;
+        border-radius: 8px;
+    }
+
+    .profile-update-title {
+        font-size: 1.5rem;
+    }
+
+    .profile-form-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .profile-submit-btn,
+    .profile-cancel-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+
+
+/* Business_confirm_delete  */
+.delete-confirm-detail-co {
+    min-height: 500px;
+}
+
+.delete-confirmation-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 200px);
+    padding: 2rem;
+}
+
+.delete-confirmation-content {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2.5rem;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.delete-icon {
+    color: #e53e3e;
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.delete-message {
+    margin-bottom: 2rem;
+}
+
+.delete-title {
+    color: #1a202c;
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+.delete-text {
+    color: #4a5568;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.business-name {
+    color: #2b6cb0;
+    font-weight: 600;
+}
+
+.warning-text {
+    display: block;
+    color: #e53e3e;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.delete-form {
+    margin-top: 2rem;
+}
+
+.delete-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.delete-confirm-btn,
+.delete-cancel-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.delete-confirm-btn {
+    background: #e53e3e;
+    color: white;
+}
+
+.delete-confirm-btn:hover {
+    background: #c53030;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(229, 62, 62, 0.2);
+}
+
+.delete-cancel-btn {
+    background: #edf2f7;
+    color: #4a5568;
+    text-decoration: none;
+}
+
+.delete-cancel-btn:hover {
+    background: #e2e8f0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .delete-confirmation-wrapper {
+        padding: 1rem;
+
+    }
+
+    .delete-confirmation-content {
+        padding: 1.5rem;
+    }
+
+    .delete-title {
+        font-size: 1.5rem;
+    }
+
+    .delete-text {
+        font-size: 1rem;
+    }
+
+    .delete-actions {
+        flex-direction: column;
+    }
+
+    .delete-confirm-btn,
+    .delete-cancel-btn {
+        width: 100%;
+    }
+}
