@@ -75,6 +75,7 @@ class LoanCreate(RoleRequiredMixin,CreateView):
         return super().form_valid(form)
     
 
+
 class RequstDetail(RoleRequiredMixin,View):
     allowed_roles = ["L"]
 

@@ -34,7 +34,7 @@
         <a href="{% url 'dashboard' %}" class="nav-item">Dashboard</a>
         <a href="{% url 'list-banks' %}" class="nav-item">New Request</a>
         <a href="{% url 'Profile' %}" class="nav-item">Profile</a>
-
+        <a href="{% url 'loan' %}" class="nav-item">View all Loan</a>
         <form action="{% url 'logout' %}" method="post" class="logout-form">
           {% csrf_token %}
           <button class="nav-item logout-btn" type="submit">Logout</button>

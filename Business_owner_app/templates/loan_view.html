@@ -1,0 +1,17 @@
+{% extends 'baseBusinessOwner.html' %} 
+
+{% block content %}
+
+<div>
+  {% if loans %}
+  {% for loan in loans %}
+  <h1>{{ loan.bank.name }}</h1>
+  <h2>{{ loan.loan_amount }}</h2>
+  <h3>{{ loan.interest_rate }}</h3>
+  <h2>{{ loan.start_date }}</h2>
+  <h3>{{ loan.end_date }}</h3>
+  {% endfor %}
+  {% endif %}
+</div>
+
+{% endblock %}

@@ -14,8 +14,7 @@
       <h2>{{ business.brand }}</h2>
       <p><strong>Owner:</strong> {{ business.user.username }}</p>
       <p>
-        <strong>Initial Cost:</strong> ${{
-        business.init_cost|floatformat:2|intcomma }}
+        <strong>Initial Cost:</strong> ${{ business.init_cost|floatformat:2|intcomma }}
       </p>
       <p>{{ business.description }}</p>
     </div>
@@ -141,14 +140,15 @@
           </tr>
           <tr>
             <td><strong>Net Income</strong></td>
-            {% for statement in income_statements %} {% if statement.net_income
-            < 0 %}
+            {% for statement in income_statements %} 
+            {% if statement.net_income < 0 %}
             <td style="color: red">
               (${{ statement.net_income|floatformat:2|intcomma|slice:'1:' }})
             </td>
             {% else %}
             <td>${{ statement.net_income|floatformat:2|intcomma }}</td>
-            {% endif %} {% endfor %}
+            {% endif %} 
+            {% endfor %}
           </tr>
         </tbody>
       </table>

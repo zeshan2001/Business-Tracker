@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404, redirect
-from main_app.models import Business ,Income_statement,Balance_sheet,Bank,Request, Profile
+from main_app.models import Business ,Income_statement,Balance_sheet,Bank,Request, Profile, Loan
 from django.views.generic.edit import UpdateView,CreateView,DeleteView
 from django.urls import reverse_lazy
 import numpy_financial as npf
@@ -192,7 +192,11 @@ def business(request):
     businesses=Business.objects.filter(user = request.user)
     return render(request, 'business.html',{'businesses':businesses})
 
+@role_required(allowed_roles=["B"])
 
+def loan_business(request):
+    loan_business = Loan.objects.filter(business__user = request.user)
+    return render(request, "loan_view.html", {"loans": loan_business})
 
 @role_required(allowed_roles=["B"])
 def business_detail(request, business_id):
