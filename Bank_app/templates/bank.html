@@ -1,5 +1,25 @@
 {% extends "base_bank.html" %}
+{% load static %}
 
 {% block content %}
-  <h1>{{ bank.name }}</h1>
+<div class="bank-wrapper">
+    <div class="bank-card">
+        <div class="bank-header">
+            <div class="bank-avatar">{{ bank.name|slice:":1" }}</div>
+            <h2 class="bank-title">{{ bank.name }} Bank!</h2>
+        </div>
+        
+        <div class="bank-content">
+            <div class="bank-detail">
+                <i class="fas fa-phone-alt">Contact </i>
+                <span>{{ bank.phone }}</span>
+            </div>
+            
+            <div class="bank-detail">
+                <i class="fas fa-location-dot">Location </i>
+                <span>{{ bank.address }}</span>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

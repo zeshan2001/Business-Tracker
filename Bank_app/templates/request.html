@@ -1,18 +1,37 @@
-{% extends "base_bank.html" %} 
+{% extends "base_bank.html" %}
+{% load static %}
+
 {% block content %}
 <div class="requests-container">
-  {% for request in requests %} 
-      <div class="request">
-        <h1>{{ request.business.brand }}</h1>
-        <h4>{{ request.borrow_amount }}</h4>
-        <p>{{ request.description }}</p>
-        <h3>Status request: <span class="pending"> Pending</span></h3>
-        <div>
-          <a href="{% url 'request_detail' request.id %}"><button>Review request</button></a>
+    <h1 class="requests-title">Loan Requests</h1>
+    
+    {% if requests %}
+        <div class="requests-grid">
+            {% for request in requests %}
+                <div class="request-card">
+                    <div class="request-header">
+                        <h2 class="request-brand">{{ request.business.brand }}</h2>
+                        <span class="request-status pending">Pending</span>
+                    </div>
+                    
+                    <div class="request-amount">
+                        <span class="amount-label">Amount Requested:</span>
+                        <span class="amount-value">${{ request.borrow_amount|floatformat:2 }}</span>
+                    </div>
+                    
+                    <!-- <p class="request-description">{{ request.description }}</p> -->
+                    
+                    <a href="{% url 'request_detail' request.id %}" class="request-btn">
+                        Review Request
+                    </a>
+                </div>
+            {% endfor %}
         </div>
-      </div>
-    {% empty %}
-    <p>There is no request yet</p>
-  {% endfor %}
+    {% else %}
+        <div class="no-requests">
+            <i class="fas fa-inbox"></i>
+            <p>No loan requests available at this time</p>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}

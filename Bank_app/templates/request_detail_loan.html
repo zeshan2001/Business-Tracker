@@ -1,3 +1,13 @@
-  <h4>Request Details</h4>
-  <p><b>Borrow amount:</b> {{ request.borrow_amount }}</p>
-  <p><b>Description:</b> {{ request.description }}</p>
+<div class="request-detail-loan">
+    <h4 class="detail-loan-title">Request Details</h4>
+    <div class="detail-loan-content">
+        <div class="detail-loan-item">
+            <span class="detail-loan-label">Borrow Amount</span>
+            <span class="detail-loan-value">${{ request.borrow_amount|floatformat:2 }}</span>
+        </div>
+        <div class="detail-loan-item">
+            <span class="detail-loan-label">Description</span>
+            <p class="detail-loan-description">{{ request.description }}</p>
+        </div>
+    </div>
+</div>
