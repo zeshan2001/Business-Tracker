@@ -1,17 +1,37 @@
-{% extends 'baseBusinessOwner.html' %} {% block content %}
-<h1>Delete Business</h1>
+{% extends 'baseBusinessOwner.html' %} {% load static %} {% block content %}
 
-<h4>
-  Are you sure you want to delete
-  <span class="teal-text"> Income Statement {{ object.year }}</span>
-</h4>
-
-<form action="" method="post">
-  {% csrf_token %}
-
-  <input type="submit" value="Yes - Delete!" class="btn" />
-
-  <a href="{% url 'business' %}">Cancel</a>
-</form>
-
+<div class="income-delete-container" id="income-delete-container">
+  <div class="income-delete-title" id="income-delete-title">
+    Confirm Deletion
+  </div>
+  <div class="income-delete-message" id="income-delete-message">
+    Are you sure you want to delete
+    <span class="income-delete-highlight" id="income-delete-highlight"
+      >Income Statement {{ object.year }}</span
+    >?
+    <br />
+    This action cannot be undone.
+  </div>
+  <form method="post" class="income-delete-form" id="income-delete-form">
+    {% csrf_token %}
+    <div class="income-delete-btns" id="income-delete-btns">
+      <button
+        type="submit"
+        class="income-delete-btn confirm"
+        id="income-delete-confirm"
+      >
+        Delete
+      </button>
+      <a
+        href="{% url 'business' %}"
+        class="income-delete-btn cancel"
+        id="income-delete-cancel"
+        >Cancel</a
+      >
+    </div>
+  </form>
+  <div class="income-delete-warning" id="income-delete-warning">
+    All associated data will be permanently removed
+  </div>
+</div>
 {% endblock %}
