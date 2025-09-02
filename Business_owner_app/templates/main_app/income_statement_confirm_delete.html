@@ -10,7 +10,9 @@
       >Income Statement {{ object.year }}</span
     >?
     <br />
-    This action cannot be undone.
+    <span style="color: #e53e3e;">
+      This action cannot be undone.
+    </span>
   </div>
   <form method="post" class="income-delete-form" id="income-delete-form">
     {% csrf_token %}
@@ -19,6 +21,7 @@
         type="submit"
         class="income-delete-btn confirm"
         id="income-delete-confirm"
+        style="background-color: #e53e3e;"
       >
         Delete
       </button>
