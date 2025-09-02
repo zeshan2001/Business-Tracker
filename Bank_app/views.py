@@ -19,17 +19,17 @@ def bank(request):
     profile = getattr(request.user, "profile", None)
     bank = Bank.objects.get(id= profile.bank_id)
     return render(request, "bank.html", {"bank": bank})
-
+@role_required(allowed_roles=["L"])
 def request_view(request):
     bank_requests = Request.objects.filter(bank= request.user.profile.bank, status="P")
     return render(request, "request.html", {"requests": bank_requests})
 
+@role_required(allowed_roles=["L"])
 def request_detail(request, request_id):
     bank_request = Request.objects.get(id = request_id)
     balance_sheets = Balance_sheet.objects.filter(business= bank_request.business.id)
     income_statements = Income_statement.objects.filter(business= bank_request.business.id)
     income_statement = Income_statement.objects.filter(business= bank_request.business.id).order_by("-year").first()
-    print(income_statement)
     
     def debt_service_coverage_ratio():
         cash_available = income_statement.net_income + income_statement.non_cash_expense
@@ -37,14 +37,15 @@ def request_detail(request, request_id):
         dscr = cash_available / loan_payment
         return dscr
     dscr = debt_service_coverage_ratio()
+    if request.user.profile.bank == bank_request.bank:
+        return render(request, "request_detail.html", {"request": bank_request, "balance_sheets": balance_sheets, "income_statements": income_statements, "DSCR": dscr})
+    else:
+        return redirect("home")
 
 
-    return render(request, "request_detail.html", {"request": bank_request, "balance_sheets": balance_sheets, "income_statements": income_statements, "DSCR": dscr})
 
-
-
-
-class LoanCreate(CreateView):
+class LoanCreate(RoleRequiredMixin,CreateView):
+    allowed_roles = ["L"]
     model = Loan
     form_class = LoanForm
     success_url = "/bank/"
@@ -74,21 +75,32 @@ class LoanCreate(CreateView):
         return super().form_valid(form)
     
 
-class RequstDetail(View):
+class RequstDetail(RoleRequiredMixin,View):
+    allowed_roles = ["L"]
+
     def get(self, request, business_id):
         bank_request = Request.objects.filter(
             business_id = business_id, bank= request.user.profile.bank
         ).first()
+        if request.user.profile.bank == bank_request.bank:
+            return render(request, "request_detail_loan.html", {"request": bank_request})
+        else: 
+            return redirect("home")
 
-        return render(request, "request_detail_loan.html", {"request": bank_request})
 
 
-
-class RequestUpdate(UpdateView):
+class RequestUpdate(RoleRequiredMixin,UpdateView):
+    allowed_roles = ["L"]
     model = Request
     form_class = RequestForm
     template_name = "request_update.html"
     success_url = reverse_lazy("request")
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if request.user.profile.bank != obj.bank:
+            return redirect("home")
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -99,13 +111,14 @@ class RequestUpdate(UpdateView):
 # Profile
 
 
-class ProfileDetail(View):
-
+class ProfileDetail(RoleRequiredMixin,View):
+    allowed_roles = ["L"]
     def get(self, request):
         owner = Profile.objects.get(user=request.user)
         return render(request, 'Bank_Profile.html', {'owner': owner})
 
-class ProfileUpdate(UpdateView):
+class ProfileUpdate(RoleRequiredMixin,UpdateView):
+    allowed_roles = ["L"]
     model = Profile
     fields = []
     # fields = ['email', 'phone']
@@ -128,16 +141,3 @@ class ProfileUpdate(UpdateView):
             update_session_auth_hash(self.request, user)
 
         return response
-
-
-# class ProfileDelete(View):
-#     def get(self, request):
-#         owner = get_object_or_404(Profile, user=request.user)
-#         return render(request, 'Bank_profile_confirm_delete.html', {'owner': owner})
-
-#     def post(self, request):
-#         owner = get_object_or_404(Profile, user=request.user)
-#         user = owner.user   # grab linked auth.User
-#         owner.delete()      # delete profile
-#         user.delete()        # delete user
-#         return redirect('home')  
