@@ -629,12 +629,13 @@
 
 /* Business Detail Page  */
 .business-info-card {
+  padding-bottom: 10px;
+  border-bottom: 1px solid lightgray;
   width: 87%;
   margin: 40px auto;
   display: flex;
   justify-content: start;
   align-items: center;
-  background-color: rgb(224, 224, 224);
 }
 .business-image-container {
   width: 300px;
@@ -644,27 +645,26 @@
   width: 100%;
   height: 100%;
 }
+.bb-det {
+  margin-left: 30px;
+}
 
 .balance-income-buttons-container {
   display: flex;
   justify-content: end;
-  margin-right: 100px;
+  margin: 0 150px 20px 0;
 }
 
 .btn-balance-income {
-  background-color: aqua;
-  margin: 5px;
-  width: 200px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid;
-  border-radius: 10px;
+  margin-left: 20px;
 }
 
 .btn-balance-income a {
+  border-bottom: 2px solid lightgray;
   text-decoration: none;
+}
+.bbttnn {
+  /* margin: 0 30px 0 10px; */
 }
 
 .financial-tables-container {
@@ -758,8 +758,14 @@
     font-size: 0.9rem;
   }
 }
+.ffscdr {
+  border-bottom: 2px solid lightgray;
+  color: gray;
+  font-size: x-large;
+}
 
 .pie-npv-charts-container {
+  margin-top: 40px;
   display: flex;
   justify-content: space-evenly;
 }
