@@ -18,7 +18,7 @@
   </head>
   <body class="app-container">
     <header class="main-header">
-      <h3 class="logo">Cover</h3>
+      <h3 class="logo">Business Tracker</h3>
       <nav class="main-nav">
         {% if user.is_authenticated and user.profile.role == "L" %}
         <a href="{% url 'bank' %}" class="nav-item nav-active">Home</a>
