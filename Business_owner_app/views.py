@@ -5,7 +5,6 @@ from django.urls import reverse_lazy
 import numpy_financial as npf
 from django.contrib.auth import update_session_auth_hash
 from django.views import View
-
 from main_app.forms import ProfileForm
 from django.contrib.auth.models import User
 

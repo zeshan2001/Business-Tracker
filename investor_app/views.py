@@ -5,6 +5,7 @@ from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth import update_session_auth_hash
 from django.views import View
+from main_app.mixins import RoleRequiredMixin
 import numpy_financial as npf
 
 # Create your views here.
@@ -14,14 +15,15 @@ def investor_dashborad(request):
     businesses = Business.objects.all()
     return render(request, "investor_dasborad.html", { 'businesses' : businesses })
 
-class ProfileDetail(View):
-
+class ProfileDetail(RoleRequiredMixin,View):
+    allowed_roles = ["I"]
     def get(self, request):
         owner = Profile.objects.get(user=request.user)
         return render(request, 'Investor_Profile.html', {'owner': owner})
 
-class ProfileUpdate(UpdateView):
+class ProfileUpdate(RoleRequiredMixin,UpdateView):
     model = Profile
+    allowed_roles= ["I"]
     fields = ['email', 'phone']
     template_name = 'Investor_Profile_Update.html'
     success_url = reverse_lazy('Investor_Profile')
@@ -44,7 +46,8 @@ class ProfileUpdate(UpdateView):
         return response
 
 
-class ProfileDelete(View):
+class ProfileDelete(RoleRequiredMixin ,View):
+    allowed_roles= ["I"]
     def get(self, request):
         owner = get_object_or_404(Profile, user=request.user)
         return render(request, 'investor_profile_confirm_delete.html', {'owner': owner})
