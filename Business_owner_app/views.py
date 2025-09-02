@@ -214,7 +214,7 @@ def business_detail(request, business_id):
         new_cost = business.init_cost * -1
         year = -1
         cash_flow = []
-        # discount_rate = 0.05
+
         reversed_statements_income = business.income_statements.all().order_by('year')
         if (income_statements):
             last_amount = reversed_statements_income.last().net_income
@@ -242,8 +242,6 @@ def business_detail(request, business_id):
         sum_of_cash = 0
         for num in range(0, len(cash_flow)):
             sum_of_cash += float(cash_flow[num]) / float((1+discount_rate)**(num+1))
-            print(cash_flow[num])
-            print(sum_of_cash)
         npv_value = sum_of_cash - float(business.init_cost)
         return npv_value
 
@@ -253,37 +251,17 @@ def business_detail(request, business_id):
         return irr
 
     irr_rate = irr()
-    print(irr_rate)
-
-        # npv_value = ( / discount_factor) - float(business.init_cost)
-        # print((float(discount_factor)/float(sum_new_cost)) - float(10000))
-    # Income_statement = getattr(business2, "income_statement", None)
-    # print(Income_statement)
-    # Sample data
-    # bar_labels = ["Jan", "Feb", "Mar", "Apr", "May"]
-    # bar_data = [10, 20, 30, 40, 50]
 
     pie_labels = ["TVC", "TFC", "TC"]
     pie_data = [float(tvc), float(tfc), float(tc)]
-    # pie_data = [6, 6, 6]
-    print(f"ddddddd::: {pie_labels}")
-    print(f"fffffffffffffffffff::: {pie_data}")
-
-    # line_labels = ["Week 1", "Week 2", "Week 3", "Week 4"]
-    # line_data = [5, 15, 10, 20]
 
     discount_rates = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
     npv_values =  []
     for i in range(50, -5, -5):
         npv_values.append(npv(i/100))
     
-    print(f"npv_values::: {npv_values}")
-
     irr = irr_rate  # Example IRR
-    print(f"rr_rate / 5::: {irr}")
 
-    # New data for User Businesses chart
-    # Example: One user with multiple businesses
     business_labels = ["Business A", "Business B", "Business C"]
     revenue_data = [15000, 22000, 18000]
     cost_data = [9000, 14000, 12000]

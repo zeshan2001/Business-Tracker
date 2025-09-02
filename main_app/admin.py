@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Bank, Business, Income_statement, Balance_sheet, Loan, Request, Profile
+
 # Register your models here.
 admin.site.register(Bank)
 # models for test

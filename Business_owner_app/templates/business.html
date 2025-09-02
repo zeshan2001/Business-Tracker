@@ -1,5 +1,4 @@
-{% extends "baseBusinessOwner.html" %} 
-{% block content %}
+{% extends "baseBusinessOwner.html" %} {% block content %}
 
 <div class="business-container">
   <!-- Header Section -->
@@ -15,7 +14,7 @@
 
     <a href="{% url 'business_Create' %}" class="create-button">
       <svg class="button-icon" viewBox="0 0 24 24">
-        <path d="M12 4v16m8-8H4"/>
+        <path d="M12 4v16m8-8H4" />
       </svg>
       Create Business
     </a>
@@ -30,7 +29,10 @@
         <div class="card-header">
           <div class="card-image">
             {% load static %}
-            <img src="{% static business_card.image|cut:'main_app/static' %}" alt="brand image" />
+            <img
+              src="{% static business_card.image|cut:'main_app/static' %}"
+              alt="brand image"
+            />
           </div>
           <div class="card-title-group">
             <h3 class="card-title">{{ business_card.brand }}</h3>
@@ -41,8 +43,9 @@
         <!-- Card Content -->
         <div class="card-info">
           <div class="info-item">
-
-            <p class="info-text">Initial Cost: ${{ business_card.init_cost }}</p>
+            <p class="info-text">
+              Initial Cost: ${{ business_card.init_cost }}
+            </p>
           </div>
         </div>
 
@@ -52,16 +55,36 @@
             View Details
           </a>
           <div class="action-group">
-            <a href="{% url 'business_update' business_card.id %}" class="action-button edit-button">
-              <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                </svg>
+            <a
+              href="{% url 'business_update' business_card.id %}"
+              class="action-button edit-button"
+            >
+              <svg
+                class="button-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                />
+              </svg>
               Edit
             </a>
-            <a href="{% url 'business_delete' business_card.id %}" class="action-button delete-button">
-              <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                </svg>
+            <a
+              href="{% url 'business_delete' business_card.id %}"
+              class="action-button delete-button"
+            >
+              <svg
+                class="button-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
+              </svg>
               Delete
             </a>
           </div>
@@ -71,7 +94,9 @@
     {% empty %}
     <div class="empty-state">
       <svg class="empty-icon" viewBox="0 0 24 24">
-        <path d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+        <path
+          d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+        />
       </svg>
       <p class="empty-title">No businesses available.</p>
       <p class="empty-subtitle">Get started by creating your first business</p>

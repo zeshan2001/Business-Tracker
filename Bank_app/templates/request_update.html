@@ -1,18 +1,43 @@
 {% extends "base_bank.html" %}
-
 {% block content %}
-  <div class="request_detail">
-    <h1>Company name: <br> {{ request.business.brand }}</h1>
-    <h3>Borrow amount: <br> {{ request.borrow_amount }}</h3>
-    <p>Description: <br> {{ request.description }}</p>
-    <h3>Status request: <span class="pending">
-    Pending</span></h3>
-  </div>
-  <div>
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">save</button>
-    </form>
-  </div>
+<div class="request-update-container">
+    <div class="request-update-card">
+        <div class="request-header">
+            <h1 class="request-title">Update Request Status</h1>
+        </div>
+
+        <div class="request-details">
+            <div class="detail-group">
+                <span class="detail-label">Company</span>
+                <span class="detail-value">{{ request.business.brand }}</span>
+            </div>
+            
+            <div class="detail-group">
+                <span class="detail-label">Amount Requested</span>
+                <span class="detail-value">${{ request.borrow_amount|floatformat:2 }}</span>
+            </div>
+            
+            <div class="detail-group">
+                <span class="detail-label">Description</span>
+                <p class="detail-value detail-description">{{ request.description }}</p>
+            </div>
+            
+            <div class="detail-group">
+                <span class="detail-label">Current Status</span>
+                <span class="status-badge pending">Pending</span>
+            </div>
+        </div>
+
+        <div class="update-form">
+            <h2 class="form-title">Update Status</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-fields">
+                    {{ form.as_p }}
+                </div>
+                <button type="submit" class="submit-btn">Update Request</button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
