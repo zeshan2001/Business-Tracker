@@ -19,45 +19,45 @@ It is a comprehensive digital platform designed for new entrepreneurs. It addres
 
 - 👤 **Name:** Abdulla Zaid
 - 💼 [LinkedIn]()
-- 🐙 [GitHub]()
+- 🐙 [GitHub](https://github.com/Abdulla-Zaid11:16)
 
 ---
 
 - 👤 **Name:** Zeshan Ahmed
 - 💼 [LinkedIn]()
-- 🐙 [GitHub]()
+- 🐙 [GitHub](https://github.com/zeshan2001)
 
 ---
 
 - 👤 **Name:** Ali Hasan
 - 💼 [LinkedIn]()
-- 🐙 [GitHub]()
+- 🐙 [GitHub](https://github.com/oklyz11:16)
 
 ---
-
 
 ## 🚀 Getting Started
 
 ## 🔗 Live Site:
 
-👉 [Deployed Project Link]()
+👉 [Deployed Project Link](https://businesstracker-d7c267641cc1.herokuapp.com/)
 
 ---
 
 
 ## 🧩 Project Board:
 
-📌 [Trello Board]()
+📌 [Trello Board](https://trello.com/b/zWDk9n4L/track-your-business)
 
 ---
 
 ## Example of Accounts
 
-| Role    | Username | Password    |
-| ------- | -------- | ----------- |
-| Admin   | admin    | admin123    |
-| Manager | manager  | manager1234 |
-| User    | user     | user1234    |
+| Role           | Username | Password    |
+| -------------- | -------- | ----------- |
+| Admin          | admin    | Password123 |
+| Line Manager   | manager  | Password123 |
+| Business Owner | Owner    | Password123 |
+| Investor       | Investor | Password123 |
 
 ## Wireframes Design
 
@@ -67,27 +67,23 @@ It is a comprehensive digital platform designed for new entrepreneurs. It addres
 
 ![ERD](./images/ERD.png)
 
-## RESTful Tables
-
-
-
-
-![TableInvestor]()
-![TableBank]()
-![TableBusiness]()
-
 ## Screenshot Design
 
-![DashboradInvestor]()
-![DashboradBank]()
-![DashboradBusiness]()
-![]()
-![]()
-![]()
+![InvestorDashborad](./images/InvestorDashborad.png)
+![BankRequestReview](./images/BankRequestReview.png)
+![BOCreateRequest](./images/BOCreateRequest.png)
+![BOBusinesses](./images/BOBusinessesAnalitics.png)
+![BOBusinessesAnalitics](./images/BOBusinessesAnalitics.png)
 
 ## 🔮 Future Work
 
-- 
+- Add a cash flow statement.
+- When the loan is accepted, the business owner will receive the money.
+- Add a unique colour theme for each user type.
+- Add a connection method between the investor & the business owner in the platform.
+- Add a balance sheet & income statement for the investor.
+- Ask the bank to provide a certificate as a requirement to be added to the website. 
+
 
 ---
 
@@ -98,13 +94,12 @@ It is a comprehensive digital platform designed for new entrepreneurs. It addres
 | Trello            | Task & Project Management |
 | Django            | Frontend & Backend        |
 | Postgre           | Database                  |
-| JWT               | User authentication       |
 | CSS               | Styling                   |
 
 ---
 
 # 🙌 Credits
 
-- [numpy finace library]()
-- [huminize jango library]()
-- []()
+- [numpy finace library](https://numpy.org/numpy-financial/)
+- [huminize jango library](https://docs.djangoproject.com/en/5.2/ref/contrib/humanize/)
+- [chart.js](https://www.chartjs.org/)
