@@ -30,8 +30,8 @@ It is a comprehensive digital platform designed for new entrepreneurs. It addres
 ---
 
 - 👤 **Name:** Ali Hasan
-- 💼 [LinkedIn]()
-- 🐙 [GitHub]()
+- 💼 [LinkedIn](https://www.linkedin.com/in/ali-khalaf-41b384333/)
+- 🐙 [GitHub](https://github.com/oklyz)
 
 ---
 
