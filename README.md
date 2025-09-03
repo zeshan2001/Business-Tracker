@@ -18,13 +18,13 @@ It is a comprehensive digital platform designed for new entrepreneurs. It addres
 ---
 
 - 👤 **Name:** Abdulla Zaid
-- 💼 [LinkedIn]()
+- 💼 [LinkedIn](https://www.linkedin.com/in/abdulla-zaid/)
 - 🐙 [GitHub](https://github.com/Abdulla-Zaid11:16)
 
 ---
 
 - 👤 **Name:** Zeshan Ahmed
-- 💼 [LinkedIn]()
+- 💼 [LinkedIn](https://www.linkedin.com/in/zeshan-ahmed-bh/)
 - 🐙 [GitHub](https://github.com/zeshan2001)
 
 ---
